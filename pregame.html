@@ -44,20 +44,20 @@
     <button class="tab" data-tab="br" onclick="switchTab('br')" data-i18n="brTab">Baserunning &amp; Bunting</button>
     <button class="tab" data-tab="stuff" onclick="switchTab('stuff')" data-i18n="stuffTab">Opposing Stuff</button>
     <button class="tab" data-tab="spray" onclick="switchTab('spray')" data-i18n="sprayTab">Spray Charts</button>
-    <button class="tab" data-tab="framing" onclick="switchTab('framing')">Catcher Framing</button>
-    <button class="tab" data-tab="usage" onclick="switchTab('usage')">Pitch Usage</button>
-    <button class="tab" data-tab="platoon" onclick="switchTab('platoon')">Platoon Splits</button>
-    <button class="tab" data-tab="ofdef" onclick="switchTab('ofdef')">OF Jump / Arm</button>
-    <button class="tab" data-tab="infield" onclick="switchTab('infield')">IF Shift / Heatmaps</button>
-    <button class="tab" data-tab="tunnel" onclick="switchTab('tunnel')">Pitch Tunneling</button>
-    <button class="tab" data-tab="tth" onclick="switchTab('tth')">Time to Home</button>
+    <button class="tab" data-tab="framing" onclick="switchTab('framing')" data-i18n="framingTab">Catcher Framing</button>
+    <button class="tab" data-tab="usage" onclick="switchTab('usage')" data-i18n="usageTab">Pitch Usage</button>
+    <button class="tab" data-tab="platoon" onclick="switchTab('platoon')" data-i18n="platoonTab">Platoon Splits</button>
+    <button class="tab" data-tab="ofdef" onclick="switchTab('ofdef')" data-i18n="ofdefTab">OF Jump / Arm</button>
+    <button class="tab" data-tab="infield" onclick="switchTab('infield')" data-i18n="infieldTab">IF Shift / Heatmaps</button>
+    <button class="tab" data-tab="tunnel" onclick="switchTab('tunnel')" data-i18n="tunnelTab">Pitch Tunneling</button>
+    <button class="tab" data-tab="tth" onclick="switchTab('tth')" data-i18n="tthTab">Time to Home</button>
   </div>
 
   <div id="loading" class="loading">Loading pregame caches…</div>
 
   <div id="panel-lineup" class="panel active">
-    <div class="section-label">Licey hitters — production by lineup spot</div>
-    <div class="note">LIDOM 2025 from winter boxscores, plus each hitter’s <strong>MLB / AAA / AA</strong> lineup-spot success from Stats API game logs (2024–2026 where available). FPS% from MLB Statcast when tracked.</div>
+    <div class="section-label" data-i18n="lineupLabel">Licey hitters — production by lineup spot</div>
+    <div class="note" data-i18n-html="lineupNote">LIDOM 2025 from winter boxscores, plus each hitter’s <strong>MLB / AAA / AA</strong> lineup-spot success from Stats API game logs (2024–2026 where available). FPS% from MLB Statcast when tracked.</div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="lineup-search" placeholder="Hitter" oninput="renderLineup()"></div>
       <div class="filter-field"><label data-i18n="level">Level</label>
@@ -95,8 +95,8 @@
   </div>
 
   <div id="panel-matchup" class="panel">
-    <div class="section-label">Licey pitchers vs opposing LIDOM hitters</div>
-    <div class="note">Built from LIDOM 2025 live play-by-play. Filter by opposing hitter’s LIDOM team. FPS% / FPS% RISP from MLB Statcast on the hitter (red = above pool avg, blue = below).</div>
+    <div class="section-label" data-i18n="matchupLabel">Licey pitchers vs opposing LIDOM hitters</div>
+    <div class="note" data-i18n-html="matchupNote">Built from LIDOM 2025 live play-by-play. Filter by opposing hitter’s LIDOM team. FPS% / FPS% RISP from MLB Statcast on the hitter (red = above pool avg, blue = below).</div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="match-search" placeholder="Pitcher or hitter" oninput="renderMatchup()"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -137,8 +137,8 @@
   </div>
 
   <div id="panel-br" class="panel">
-    <div class="section-label">LIDOM hitters — baserunning &amp; bunting</div>
-    <div class="note">Season SB/CS/sac bunts from MLB winter stats. Low-PA hitters may show Prospect Savant AAA fallback rates when available.</div>
+    <div class="section-label" data-i18n="brLabel">LIDOM hitters — baserunning &amp; bunting</div>
+    <div class="note" data-i18n="brNote">Season SB/CS/sac bunts from MLB winter stats. Low-PA hitters may show Prospect Savant AAA fallback rates when available.</div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="br-search" placeholder="Hitter / team" oninput="renderBR()"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -169,8 +169,8 @@
   </div>
 
   <div id="panel-stuff" class="panel">
-    <div class="section-label">Advance scouting — opposing pitcher Stuff+</div>
-    <div class="note">AAA / MiLB tracking via Prospect Savant. MLB arms use PS when tracked; otherwise marked for Statcast stuff index.</div>
+    <div class="section-label" data-i18n="stuffLabel">Advance scouting — opposing pitcher Stuff+</div>
+    <div class="note" data-i18n="stuffNote">AAA / MiLB tracking via Prospect Savant. MLB arms use PS when tracked; otherwise marked for Statcast stuff index.</div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="stuff-search" placeholder="Pitcher / team" oninput="renderStuff()"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -193,7 +193,7 @@
   </div>
 
   <div id="panel-spray" class="panel">
-    <div class="section-label">Spray charts — nobody on · RISP · 2 strikes</div>
+    <div class="section-label" data-i18n="sprayLabel">Spray charts — nobody on · RISP · 2 strikes</div>
     <div class="warn-box" id="spray-note">Loading spray availability note…</div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -217,7 +217,7 @@
       </div>
     </div>
     <div id="spray-mlb" class="spray-grid"></div>
-    <div class="section-label" style="margin-top:20px">AAA directional proxy (green = above pool avg · blue = below)</div>
+    <div class="section-label" style="margin-top:20px" data-i18n="aaaProxyLabel">AAA directional proxy (green = above pool avg · blue = below)</div>
     <div class="table-wrap">
       <table id="tbl-aaa-proxy"><thead><tr>
         <th>Hitter</th><th>Team</th><th>Level</th>
@@ -228,51 +228,51 @@
 
   <div id="panel-framing" class="panel">
     <div class="coming-soon">
-      <h3>Catcher framing / pop time</h3>
-      <p>Opposing catchers: framing runs, exchange, CS% vs Licey runners. Useful for SB green lights.</p>
-      <div class="tagline-note">Cache not built yet — tab is live so we can drop data in without another layout pass.</div>
+      <h3 data-i18n="framingTitle">Catcher framing / pop time</h3>
+      <p data-i18n="framingBody">Opposing catchers: framing runs, exchange, CS% vs Licey runners. Useful for SB green lights.</p>
+      <div class="tagline-note" data-i18n="cachePending">Cache not built yet — tab is live so we can drop data in without another layout pass.</div>
     </div>
   </div>
   <div id="panel-usage" class="panel">
     <div class="coming-soon">
-      <h3>Pitch usage by count</h3>
-      <p>Opposing starters: first-pitch%, 0-2 / 1-2 / 3-2 pitch mix from Prospect Savant or Statcast.</p>
-      <div class="tagline-note">Cache not built yet.</div>
+      <h3 data-i18n="usageTitle">Pitch usage by count</h3>
+      <p data-i18n="usageBody">Opposing starters: first-pitch%, 0-2 / 1-2 / 3-2 pitch mix from Prospect Savant or Statcast.</p>
+      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
     </div>
   </div>
   <div id="panel-platoon" class="panel">
     <div class="coming-soon">
-      <h3>Platoon splits matrix</h3>
-      <p>Licey bats vs RHP/LHP and vs opposing arms — wOBA/OPS by platoon from LIDOM + AAA.</p>
-      <div class="tagline-note">Cache not built yet.</div>
+      <h3 data-i18n="platoonTitle">Platoon splits matrix</h3>
+      <p data-i18n="platoonBody">Licey bats vs RHP/LHP and vs opposing arms — wOBA/OPS by platoon from LIDOM + AAA.</p>
+      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
     </div>
   </div>
   <div id="panel-ofdef" class="panel">
     <div class="coming-soon">
-      <h3>Outfield jump / arm grades</h3>
-      <p>Advance OF defense: jump, route, arm strength for extra-base decisions.</p>
-      <div class="tagline-note">Cache not built yet.</div>
+      <h3 data-i18n="ofdefTitle">Outfield jump / arm grades</h3>
+      <p data-i18n="ofdefBody">Advance OF defense: jump, route, arm strength for extra-base decisions.</p>
+      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
     </div>
   </div>
   <div id="panel-infield" class="panel">
     <div class="coming-soon">
-      <h3>Infield shift / spray heatmaps</h3>
-      <p>Combine MLB sprays with LIDOM pull rates for positioning cards.</p>
-      <div class="tagline-note">Cache not built yet — MLB sprays already live under Spray Charts.</div>
+      <h3 data-i18n="infieldTitle">Infield shift / spray heatmaps</h3>
+      <p data-i18n="infieldBody">Combine MLB sprays with LIDOM pull rates for positioning cards.</p>
+      <div class="tagline-note" data-i18n="cachePendingSpray">Cache not built yet — MLB sprays already live under Spray Charts.</div>
     </div>
   </div>
   <div id="panel-tunnel" class="panel">
     <div class="coming-soon">
-      <h3>Pitch tunneling / shape</h3>
-      <p>IVB/HB overlays for opposing arsenals.</p>
-      <div class="tagline-note">Cache not built yet.</div>
+      <h3 data-i18n="tunnelTitle">Pitch tunneling / shape</h3>
+      <p data-i18n="tunnelBody">IVB/HB overlays for opposing arsenals.</p>
+      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
     </div>
   </div>
   <div id="panel-tth" class="panel">
     <div class="coming-soon">
-      <h3>Time to home / WP/PB</h3>
-      <p>Stolen base windows vs catcher + pitcher — time-to-home, wild pitch / passed ball rates.</p>
-      <div class="tagline-note">Cache not built yet.</div>
+      <h3 data-i18n="tthTitle">Time to home / WP/PB</h3>
+      <p data-i18n="tthBody">Stolen base windows vs catcher + pitcher — time-to-home, wild pitch / passed ball rates.</p>
+      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
     </div>
   </div>
 </main>
