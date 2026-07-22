@@ -105,7 +105,7 @@
 </main>
 <script src="i18n.js"></script>
 <script>
-let DATA = null, FPS = {}, sortState = {}, tab = 'pitchers';
+let DATA = null, FPS = {}, FPS_AVG = { fps: 0.28, fpsRisp: 0.28 }, sortState = {}, tab = 'pitchers';
 const pct = v => v == null ? '—' : (v*100).toFixed(1)+'%';
 const dec = (v,d=3) => v == null ? '—' : Number(v).toFixed(d);
 function fpsFor(id) {
@@ -117,6 +117,24 @@ function fpsFor(id) {
     }
   }
   return { fps: null, fpsRisp: null };
+}
+function computeFpsAvgs() {
+  const fpsVals = [], rispVals = [];
+  Object.values(FPS || {}).forEach(row => {
+    const seasons = row.seasons || {};
+    for (const y of ['2025','2026']) {
+      if (seasons[y]?.fps_pct != null) fpsVals.push(seasons[y].fps_pct);
+      if (seasons[y]?.fps_risp_pct != null) rispVals.push(seasons[y].fps_risp_pct);
+    }
+  });
+  if (fpsVals.length) FPS_AVG.fps = fpsVals.reduce((a,b)=>a+b,0) / fpsVals.length;
+  if (rispVals.length) FPS_AVG.fpsRisp = rispVals.reduce((a,b)=>a+b,0) / rispVals.length;
+}
+function fpsCls(v, avg) {
+  if (v == null || avg == null) return '';
+  if (v > avg) return 'high';
+  if (v < avg) return 'low';
+  return '';
 }
 function switchTab(name) {
   tab = name;
@@ -145,7 +163,7 @@ function render() {
     <td class="num">${pct(p.bb_pct)}</td>
     <td class="num">${pct(p.k_bb_pct)}</td>
     <td class="num">${pct(p.swstr)}</td>
-    <td class="num ${p.stuff_plus!=null?(p.stuff_plus>=105?'good':p.stuff_plus<=90?'bad':''):''}">${p.stuff_plus??'—'}</td>
+    <td class="num ${p.stuff_plus!=null?(p.stuff_plus>=105?'good':p.stuff_plus<=90?'low':''):''}">${p.stuff_plus??'—'}</td>
     <td class="num">${p.era!=null?Number(p.era).toFixed(2):'—'}</td>
     <td class="num">${p.whip!=null?Number(p.whip).toFixed(2):'—'}</td>
     <td class="num">${p.mlb_service_days??0}</td>
@@ -164,8 +182,8 @@ function render() {
     <td class="num">${pct(h.bb_pct)}</td>
     <td class="num">${pct(h.k_pct)}</td>
     <td class="num">${pct(h.swstr)}</td>
-    <td class="num">${pct(f.fps)}</td>
-    <td class="num">${pct(f.fpsRisp)}</td>
+    <td class="num ${fpsCls(f.fps, FPS_AVG.fps)}">${pct(f.fps)}</td>
+    <td class="num ${fpsCls(f.fpsRisp, FPS_AVG.fpsRisp)}">${pct(f.fpsRisp)}</td>
     <td class="num">${h.mlb_service_days??0}</td>
     <td class="num">${h.international?'Y':'N'}</td>
     <td>${h.birth_country||'—'}</td>
@@ -190,6 +208,7 @@ Promise.all([
   fetch('data/fps_cache.json').then(r=>r.json()).catch(()=>({})),
 ]).then(([d, fps])=>{
   DATA=d; FPS=fps;
+  computeFpsAvgs();
   document.getElementById('loading').style.display='none';
   document.getElementById('meta-note').textContent =
     `Season ${d.season} · ${d.pitchers.length} pitchers · ${d.hitters.length} hitters · Excluded: ${(d.excluded_birth_countries||[]).join(', ')} · Generated ${d.generated||''}`;

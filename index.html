@@ -200,6 +200,20 @@ let stuffView = false;
 let sortCol = null;
 let sortAsc = false;
 let DATA = { lidomH: [], lidomP: [], mlbH: [], mlbP: [], milbH: [], milbP: [], rosters: {}, stuff: {}, fps: {} };
+let FPS_AVG = { fps: 0.28, fpsRisp: 0.28 };
+
+function computeFpsAvgs() {
+  const fpsVals = [], rispVals = [];
+  Object.values(DATA.fps || {}).forEach(row => {
+    const seasons = row.seasons || {};
+    for (const y of ['2025','2026']) {
+      if (seasons[y]?.fps_pct != null) fpsVals.push(seasons[y].fps_pct);
+      if (seasons[y]?.fps_risp_pct != null) rispVals.push(seasons[y].fps_risp_pct);
+    }
+  });
+  if (fpsVals.length) FPS_AVG.fps = fpsVals.reduce((a,b)=>a+b,0) / fpsVals.length;
+  if (rispVals.length) FPS_AVG.fpsRisp = rispVals.reduce((a,b)=>a+b,0) / rispVals.length;
+}
 
 function num(v) {
   if (v == null || v === '' || v === '.---' || v === '-.--') return null;
@@ -559,8 +573,18 @@ function formatCell(key, r) {
   if (key === 'ip') return r.ip ?? '—';
   if (['avg','obp','slg','ops','iso','babip'].includes(key)) return dec(r[key]);
   if (['era','whip','k9','bb9'].includes(key)) return r[key] == null ? '—' : Number(r[key]).toFixed(2);
-  if (['strikePct','whiff','kPct','bbPct','fps','fpsRisp'].includes(key)) return r[key] == null ? '—' : pct(r[key]);
-  if (key === 'stuffPlus') return r.stuffPlus ?? '—';
+  if (key === 'fps' || key === 'fpsRisp') {
+    if (r[key] == null) return '—';
+    const avg = key === 'fps' ? FPS_AVG.fps : FPS_AVG.fpsRisp;
+    const cls = r[key] > avg ? 'high' : (r[key] < avg ? 'low' : '');
+    return `<span class="${cls}">${pct(r[key])}</span>`;
+  }
+  if (['strikePct','whiff','kPct','bbPct'].includes(key)) return r[key] == null ? '—' : pct(r[key]);
+  if (key === 'stuffPlus') {
+    if (r.stuffPlus == null) return '—';
+    const cls = r.stuffPlus >= 105 ? 'good' : (r.stuffPlus <= 90 ? 'low' : '');
+    return `<span class="${cls}">${r.stuffPlus}</span>`;
+  }
   const v = r[key];
   return v == null ? '—' : v;
 }
@@ -651,6 +675,7 @@ async function loadAll() {
       fetch('data/fps_cache.json').then(r => r.json()).catch(() => ({})),
     ]);
     DATA = { lidomH, lidomP, mlbH, mlbP, milbH, milbP, rosters, stuff, fps };
+    computeFpsAvgs();
     const sel = document.getElementById('roster-team');
     sel.innerHTML = '<option value="all">All Teams</option>' +
       Object.entries(rosters).map(([id, t]) => `<option value="${id}">${t.teamName}</option>`).join('');
