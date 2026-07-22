@@ -147,8 +147,9 @@
         <div class="filter-field">
           <label data-i18n="timeRange">Time Range</label>
           <select id="f-time" onchange="onFilterChange()">
+            <option value="from_oct_2025" selected>Oct 2025 onwards (optional)</option>
             <option value="2026_season">2026 (whole season)</option>
-            <option value="lidom_season" selected>LIDOM (whole season)</option>
+            <option value="lidom_season">LIDOM (whole season)</option>
             <option value="lidom_oct">LIDOM (October)</option>
             <option value="lidom_nov">LIDOM (November)</option>
             <option value="lidom_dec">LIDOM (December)</option>
@@ -277,7 +278,7 @@ function resetFilters() {
   document.getElementById('f-year').value = '2025';
   document.getElementById('f-level').value = 'LIDOM';
   document.getElementById('f-pos').value = 'all';
-  document.getElementById('f-time').value = 'lidom_season';
+  document.getElementById('f-time').value = 'from_oct_2025';
   stuffView = false;
   document.getElementById('btn-stuff').classList.remove('active');
   syncRosterFromStatsTeam();
@@ -286,11 +287,9 @@ function resetFilters() {
 
 function onTeamChange() {
   const team = document.getElementById('f-team').value;
+  // LIDOM team filter only applies to LIDOM; switch level if needed, but never override time range
   if (team !== 'all') {
     document.getElementById('f-level').value = 'LIDOM';
-    document.getElementById('f-year').value = '2025';
-    const time = document.getElementById('f-time').value;
-    if (!time.startsWith('lidom')) document.getElementById('f-time').value = 'lidom_season';
   }
   syncRosterFromStatsTeam();
   updateBanner();
@@ -316,16 +315,8 @@ function syncRosterFromStatsTeam() {
 }
 
 function onFilterChange() {
-  const level = document.getElementById('f-level').value;
-  const time = document.getElementById('f-time').value;
-  if (time.startsWith('lidom')) {
-    document.getElementById('f-level').value = 'LIDOM';
-    document.getElementById('f-year').value = '2025';
-  } else if (time === '2026_season') {
-    document.getElementById('f-year').value = '2026';
-    if (level === 'LIDOM') document.getElementById('f-level').value = 'MLB';
-    document.getElementById('f-team').value = 'all';
-  }
+  // Time range is optional context only — never forces Level or Year.
+  // Clear LIDOM team when viewing MLB/MiLB (team abbrevs are LIDOM-only).
   if (document.getElementById('f-level').value !== 'LIDOM') {
     document.getElementById('f-team').value = 'all';
   }
@@ -335,28 +326,47 @@ function onFilterChange() {
 }
 
 function activeSource() {
+  // Level alone chooses the dataset; time range does not override.
   const level = document.getElementById('f-level').value;
-  const time = document.getElementById('f-time').value;
-  if (time.startsWith('lidom') || level === 'LIDOM') return 'lidom';
+  if (level === 'LIDOM') return 'lidom';
   if (level === 'MLB') return 'mlb';
   return 'milb';
+}
+
+function timeRangeLabel() {
+  const time = document.getElementById('f-time').value;
+  return {
+    from_oct_2025: 'Oct 2025 onwards',
+    '2026_season': '2026 whole season',
+    lidom_season: 'LIDOM whole season',
+    lidom_oct: 'LIDOM October',
+    lidom_nov: 'LIDOM November',
+    lidom_dec: 'LIDOM December',
+    lidom_jan: 'LIDOM January',
+  }[time] || time;
 }
 
 function updateBanner() {
   const src = activeSource();
   const time = document.getElementById('f-time').value;
   const team = document.getElementById('f-team').value;
+  const year = document.getElementById('f-year').value;
+  const tr = timeRangeLabel();
   const monthNote = { lidom_oct:'October', lidom_nov:'November', lidom_dec:'December', lidom_jan:'January' }[time];
   let msg = '';
   if (src === 'lidom') {
     const teamLabel = team === 'all' ? 'all LIDOM teams' : (Object.values(TEAM_META).find(t => t.abbrev === team)?.name || team);
-    msg = monthNote
-      ? `Showing <strong>2025 LIDOM</strong> (${teamLabel}) — full-season stand-in for ${monthNote} until 2026 winter splits are live. FPS% from MLB Statcast when the hitter has tracked MLB pitches.`
-      : `Showing <strong>2025 LIDOM</strong> (${teamLabel}). FPS% / FPS% RISP from MLB Statcast when available.`;
+    if (monthNote) {
+      msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}) — full-season stand-in for ${monthNote} until winter splits are live. Time range: ${tr}.`;
+    } else if (time === 'from_oct_2025') {
+      msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}). Time range optional: <strong>${tr}</strong> — pick a finer range anytime; Level stays independent.`;
+    } else {
+      msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}). Time range: ${tr}.`;
+    }
   } else if (src === 'mlb') {
-    msg = `Showing <strong>2026 MLB</strong> regular-season stats.`;
+    msg = `Showing <strong>${year} MLB</strong> stats (2026 data loaded). Time range optional: <strong>${tr}</strong> — does not change Level.`;
   } else {
-    msg = `Showing <strong>2026 MiLB</strong> (AA + AAA) regular-season stats.`;
+    msg = `Showing <strong>${year} MiLB</strong> (AA + AAA) stats (2026 data loaded). Time range optional: <strong>${tr}</strong> — does not change Level.`;
   }
   document.getElementById('data-banner').innerHTML = msg;
 }
