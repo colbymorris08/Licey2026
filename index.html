@@ -115,9 +115,12 @@
         <div class="filter-field">
           <label data-i18n="level">Level</label>
           <select id="f-level" onchange="onFilterChange()">
-            <option value="LIDOM" selected>LIDOM</option>
-            <option value="MLB">MLB</option>
+            <option value="all" selected>All</option>
+            <option value="LIDOM">LIDOM</option>
+            <option value="MEX">Mexico</option>
             <option value="MiLB">MiLB</option>
+            <option value="MLB">MLB</option>
+            <option value="MiLB_MLB">MiLB / MLB</option>
           </select>
         </div>
         <div class="filter-field">
@@ -199,7 +202,7 @@ let view = 'standard';
 let stuffView = false;
 let sortCol = null;
 let sortAsc = false;
-let DATA = { lidomH: [], lidomP: [], mlbH: [], mlbP: [], milbH: [], milbP: [], rosters: {}, stuff: {}, fps: {} };
+let DATA = { lidomH: [], lidomP: [], mlbH: [], mlbP: [], milbH: [], milbP: [], mexH: [], mexP: [], rosters: {}, stuff: {}, fps: {} };
 let FPS_AVG = { fps: 0.28, fpsRisp: 0.28 };
 
 function computeFpsAvgs() {
@@ -283,7 +286,7 @@ function toggleStuffView() {
 
 function resetFilters() {
   document.getElementById('f-team').value = 'all';
-  document.getElementById('f-level').value = 'LIDOM';
+  document.getElementById('f-level').value = 'all';
   document.getElementById('f-pos').value = 'all';
   document.getElementById('f-time').value = 'from_oct_2025';
   stuffView = false;
@@ -294,7 +297,7 @@ function resetFilters() {
 
 function onTeamChange() {
   const team = document.getElementById('f-team').value;
-  // LIDOM team filter only applies to LIDOM; switch level if needed, but never override time range
+  // Selecting a LIDOM team scopes Level to LIDOM (team abbrevs are LIDOM-only)
   if (team !== 'all') {
     document.getElementById('f-level').value = 'LIDOM';
   }
@@ -323,8 +326,9 @@ function syncRosterFromStatsTeam() {
 
 function onFilterChange() {
   // Time range is optional context only — never forces Level.
-  // Clear LIDOM team when viewing MLB/MiLB (team abbrevs are LIDOM-only).
-  if (document.getElementById('f-level').value !== 'LIDOM') {
+  // Clear LIDOM team unless Level is LIDOM (or All with team still only filters LIDOM rows).
+  const level = document.getElementById('f-level').value;
+  if (level !== 'LIDOM' && level !== 'all') {
     document.getElementById('f-team').value = 'all';
   }
   syncRosterFromStatsTeam();
@@ -332,13 +336,15 @@ function onFilterChange() {
   renderTable();
 }
 
-function activeSource() {
-  // Level alone chooses the dataset; time range does not override.
-  // LIDOM 2026 is not populated yet — still use 2025 LIDOM rows when Level=LIDOM.
+function selectedLevels() {
   const level = document.getElementById('f-level').value;
-  if (level === 'LIDOM') return 'lidom';
-  if (level === 'MLB') return 'mlb';
-  return 'milb';
+  if (level === 'all') return ['LIDOM', 'MEX', 'MiLB', 'MLB'];
+  if (level === 'MiLB_MLB') return ['MiLB', 'MLB'];
+  if (level === 'MEX') return ['MEX'];
+  if (level === 'LIDOM') return ['LIDOM'];
+  if (level === 'MLB') return ['MLB'];
+  if (level === 'MiLB') return ['MiLB'];
+  return ['LIDOM', 'MEX', 'MiLB', 'MLB'];
 }
 
 function preferredFpsYear() {
@@ -362,33 +368,22 @@ function timeRangeLabel() {
 }
 
 function updateBanner() {
-  const src = activeSource();
+  const levels = selectedLevels();
   const time = document.getElementById('f-time').value;
   const team = document.getElementById('f-team').value;
   const tr = timeRangeLabel();
-  const monthNote = {
-    lidom_2025_oct: 'October 2025',
-    lidom_2025_nov: 'November 2025',
-    lidom_2025_dec: 'December 2025',
-    lidom_2025_jan: 'January 2025',
-  }[time];
-  let msg = '';
-  if (time === 'lidom_2026_season' && src === 'lidom') {
-    msg = `<strong>LIDOM 2026</strong> is not populated yet — showing <strong>2025 LIDOM</strong> as a stand-in. Time range: ${tr}.`;
-  } else if (src === 'lidom') {
+  const label = document.getElementById('f-level').selectedOptions[0]?.textContent || levels.join(' / ');
+  let msg = `Level: <strong>${label}</strong> · Time range optional: <strong>${tr}</strong>.`;
+  if (levels.includes('LIDOM')) {
     const teamLabel = team === 'all' ? 'all LIDOM teams' : (Object.values(TEAM_META).find(t => t.abbrev === team)?.name || team);
-    if (monthNote) {
-      msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}) — full-season stand-in for ${monthNote} until winter splits are live. Time range: ${tr}.`;
-    } else if (time === 'from_oct_2025') {
-      msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}). Time range optional: <strong>${tr}</strong> — pick a finer range anytime; Level stays independent.`;
+    if (time === 'lidom_2026_season') {
+      msg += ` LIDOM 2026 not populated yet — using <strong>2025 LIDOM</strong> (${teamLabel}) as stand-in.`;
     } else {
-      msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}). Time range: ${tr}.`;
+      msg += ` LIDOM block = <strong>2025 LIDOM</strong> (${teamLabel}).`;
     }
-  } else if (src === 'mlb') {
-    msg = `Showing <strong>2026 MLB</strong> stats. Time range optional: <strong>${tr}</strong> — does not change Level.`;
-  } else {
-    msg = `Showing <strong>2026 MiLB</strong> (AA + AAA) stats. Time range optional: <strong>${tr}</strong> — does not change Level.`;
   }
+  if (levels.includes('MEX')) msg += ` Mexico = <strong>2026 Liga Mexicana</strong>.`;
+  if (levels.includes('MLB') || levels.includes('MiLB')) msg += ` MLB/MiLB = <strong>2026</strong> season.`;
   document.getElementById('data-banner').innerHTML = msg;
 }
 
@@ -450,23 +445,45 @@ function normalizePit(s, levelHint) {
 }
 
 function currentPool() {
-  const src = activeSource();
+  const levels = selectedLevels();
+  const out = [];
   if (mode === 'hitting') {
-    if (src === 'lidom') return DATA.lidomH.map(r => normalizeHit(r, 'LIDOM'));
-    if (src === 'mlb') return DATA.mlbH.map(r => normalizeHit(r, 'MLB'));
-    return DATA.milbH.map(r => normalizeHit(r, r._level || 'MiLB'));
+    if (levels.includes('LIDOM')) out.push(...DATA.lidomH.map(r => normalizeHit(r, 'LIDOM')));
+    if (levels.includes('MEX')) out.push(...DATA.mexH.map(r => normalizeHit(r, 'MEX')));
+    if (levels.includes('MLB')) out.push(...DATA.mlbH.map(r => normalizeHit(r, 'MLB')));
+    if (levels.includes('MiLB')) out.push(...DATA.milbH.map(r => normalizeHit(r, r._level || 'MiLB')));
+  } else {
+    if (levels.includes('LIDOM')) out.push(...DATA.lidomP.map(r => normalizePit(r, 'LIDOM')));
+    if (levels.includes('MEX')) out.push(...DATA.mexP.map(r => normalizePit(r, 'MEX')));
+    if (levels.includes('MLB')) out.push(...DATA.mlbP.map(r => normalizePit(r, 'MLB')));
+    if (levels.includes('MiLB')) out.push(...DATA.milbP.map(r => normalizePit(r, r._level || 'MiLB')));
   }
-  if (src === 'lidom') return DATA.lidomP.map(r => normalizePit(r, 'LIDOM'));
-  if (src === 'mlb') return DATA.mlbP.map(r => normalizePit(r, 'MLB'));
-  return DATA.milbP.map(r => normalizePit(r, r._level || 'MiLB'));
+  return out;
+}
+
+function minPaFor(level) {
+  if (level === 'LIDOM') return 25;
+  if (level === 'MEX') return 30;
+  return 40;
+}
+function minIpFor(level) {
+  if (level === 'LIDOM') return 5;
+  if (level === 'MEX') return 8;
+  return 10;
 }
 
 function applyFilters(rows) {
   const team = document.getElementById('f-team').value;
   const pos = document.getElementById('f-pos').value;
-  const src = activeSource();
   return rows.filter(r => {
-    if (src === 'lidom' && team !== 'all' && r.team !== team) return false;
+    // LIDOM team dropdown only filters LIDOM rows; other levels stay when Level=All
+    if (team !== 'all') {
+      if (r.level === 'LIDOM') {
+        if (r.team !== team) return false;
+      } else if (document.getElementById('f-level').value === 'LIDOM') {
+        return false;
+      }
+    }
     if (pos !== 'all') {
       if (pos === 'OF') {
         if (!OF_POS.has(r.pos)) return false;
@@ -474,8 +491,8 @@ function applyFilters(rows) {
         return false;
       }
     }
-    if (mode === 'hitting' && (r.pa || 0) < (src === 'lidom' ? 25 : 40)) return false;
-    if (mode === 'pitching' && (r.ipN || 0) < (src === 'lidom' ? 5 : 10)) return false;
+    if (mode === 'hitting' && (r.pa || 0) < minPaFor(r.level)) return false;
+    if (mode === 'pitching' && (r.ipN || 0) < minIpFor(r.level)) return false;
     return true;
   });
 }
@@ -663,18 +680,20 @@ function renderRosters() {
 
 async function loadAll() {
   try {
-    const [lidomH, lidomP, mlbH, mlbP, milbH, milbP, rosters, stuff, fps] = await Promise.all([
+    const [lidomH, lidomP, mlbH, mlbP, milbH, milbP, mexH, mexP, rosters, stuff, fps] = await Promise.all([
       fetch('data/lidom_2025_hitting.json').then(r => r.json()),
       fetch('data/lidom_2025_pitching.json').then(r => r.json()),
       fetch('data/mlb_2026_hitting.json').then(r => r.json()),
       fetch('data/mlb_2026_pitching.json').then(r => r.json()),
       fetch('data/milb_2026_hitting.json').then(r => r.json()),
       fetch('data/milb_2026_pitching.json').then(r => r.json()),
+      fetch('data/mexico_2026_hitting.json').then(r => r.json()),
+      fetch('data/mexico_2026_pitching.json').then(r => r.json()),
       fetch('data/lidom_2025_rosters.json').then(r => r.json()),
       fetch('data/lidom_pitcher_stuff.json').then(r => r.json()).catch(() => ({})),
       fetch('data/fps_cache.json').then(r => r.json()).catch(() => ({})),
     ]);
-    DATA = { lidomH, lidomP, mlbH, mlbP, milbH, milbP, rosters, stuff, fps };
+    DATA = { lidomH, lidomP, mlbH, mlbP, milbH, milbP, mexH, mexP, rosters, stuff, fps };
     computeFpsAvgs();
     const sel = document.getElementById('roster-team');
     sel.innerHTML = '<option value="all">All Teams</option>' +
