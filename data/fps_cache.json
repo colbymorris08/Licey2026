@@ -1,0 +1,2748 @@
+{
+  "455117": {
+    "player_id": 455117,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2857,
+        "fps_n": 168,
+        "fps_risp_pct": 0.3824,
+        "fps_risp_n": 34,
+        "source": "Statcast 2025"
+      }
+    }
+  },
+  "542194": {
+    "player_id": 542194,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.0,
+        "fps_n": 1,
+        "fps_risp_pct": null,
+        "fps_risp_n": 0,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 1.0,
+        "fps_n": 2,
+        "fps_risp_pct": 1.0,
+        "fps_risp_n": 1,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "570482": {
+    "player_id": 570482,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4038,
+        "fps_n": 208,
+        "fps_risp_pct": 0.5283,
+        "fps_risp_n": 53,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.0,
+        "fps_n": 2,
+        "fps_risp_pct": null,
+        "fps_risp_n": 0,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "596142": {
+    "player_id": 596142,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1622,
+        "fps_n": 111,
+        "fps_risp_pct": 0.1935,
+        "fps_risp_n": 31,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1613,
+        "fps_n": 186,
+        "fps_risp_pct": 0.2222,
+        "fps_risp_n": 54,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "600869": {
+    "player_id": 600869,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2647,
+        "fps_n": 102,
+        "fps_risp_pct": 0.3462,
+        "fps_risp_n": 26,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.28,
+        "fps_n": 25,
+        "fps_risp_pct": 0.3333,
+        "fps_risp_n": 3,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "614173": {
+    "player_id": 614173,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.75,
+        "fps_n": 4,
+        "fps_risp_pct": 1.0,
+        "fps_risp_n": 1,
+        "source": "Statcast 2025"
+      }
+    }
+  },
+  "622569": {
+    "player_id": 622569,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2444,
+        "fps_n": 45,
+        "fps_risp_pct": 0.1667,
+        "fps_risp_n": 12,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.0,
+        "fps_n": 2,
+        "fps_risp_pct": null,
+        "fps_risp_n": 0,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "622761": {
+    "player_id": 622761,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2967,
+        "fps_n": 91,
+        "fps_risp_pct": 0.3636,
+        "fps_risp_n": 22,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3699,
+        "fps_n": 146,
+        "fps_risp_pct": 0.4062,
+        "fps_risp_n": 32,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "457705": {
+    "player_id": 457705,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3023,
+        "fps_n": 559,
+        "fps_risp_pct": 0.3583,
+        "fps_risp_n": 120,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3034,
+        "fps_n": 89,
+        "fps_risp_pct": 0.3182,
+        "fps_risp_n": 22,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "500743": {
+    "player_id": 500743,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2167,
+        "fps_n": 323,
+        "fps_risp_pct": 0.32,
+        "fps_risp_n": 75,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2558,
+        "fps_n": 172,
+        "fps_risp_pct": 0.3659,
+        "fps_risp_n": 41,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "502671": {
+    "player_id": 502671,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2951,
+        "fps_n": 549,
+        "fps_risp_pct": 0.3305,
+        "fps_risp_n": 118,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3193,
+        "fps_n": 285,
+        "fps_risp_pct": 0.3559,
+        "fps_risp_n": 59,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "514888": {
+    "player_id": 514888,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4485,
+        "fps_n": 660,
+        "fps_risp_pct": 0.4383,
+        "fps_risp_n": 162,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4128,
+        "fps_n": 344,
+        "fps_risp_pct": 0.3214,
+        "fps_risp_n": 84,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "516782": {
+    "player_id": 516782,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2976,
+        "fps_n": 336,
+        "fps_risp_pct": 0.2987,
+        "fps_risp_n": 77,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2537,
+        "fps_n": 134,
+        "fps_risp_pct": 0.1818,
+        "fps_risp_n": 33,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "518692": {
+    "player_id": 518692,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3985,
+        "fps_n": 650,
+        "fps_risp_pct": 0.4654,
+        "fps_risp_n": 159,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3401,
+        "fps_n": 441,
+        "fps_risp_pct": 0.4059,
+        "fps_risp_n": 101,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "519317": {
+    "player_id": 519317,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1921,
+        "fps_n": 302,
+        "fps_risp_pct": 0.2472,
+        "fps_risp_n": 89,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1961,
+        "fps_n": 102,
+        "fps_risp_pct": 0.1935,
+        "fps_risp_n": 31,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "521692": {
+    "player_id": 521692,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3982,
+        "fps_n": 653,
+        "fps_risp_pct": 0.4802,
+        "fps_risp_n": 177,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4035,
+        "fps_n": 404,
+        "fps_risp_pct": 0.5472,
+        "fps_risp_n": 106,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "542303": {
+    "player_id": 542303,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1835,
+        "fps_n": 605,
+        "fps_risp_pct": 0.1908,
+        "fps_risp_n": 152,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1791,
+        "fps_n": 268,
+        "fps_risp_pct": 0.2297,
+        "fps_risp_n": 74,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "543309": {
+    "player_id": 543309,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1573,
+        "fps_n": 337,
+        "fps_risp_pct": 0.2192,
+        "fps_risp_n": 73,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1762,
+        "fps_n": 193,
+        "fps_risp_pct": 0.2889,
+        "fps_risp_n": 45,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "543510": {
+    "player_id": 543510,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3212,
+        "fps_n": 137,
+        "fps_risp_pct": 0.4194,
+        "fps_risp_n": 31,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2987,
+        "fps_n": 77,
+        "fps_risp_pct": 0.25,
+        "fps_risp_n": 16,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "543760": {
+    "player_id": 543760,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3752,
+        "fps_n": 549,
+        "fps_risp_pct": 0.4462,
+        "fps_risp_n": 130,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4248,
+        "fps_n": 339,
+        "fps_risp_pct": 0.4578,
+        "fps_risp_n": 83,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "543807": {
+    "player_id": 543807,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3641,
+        "fps_n": 607,
+        "fps_risp_pct": 0.3286,
+        "fps_risp_n": 140,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3375,
+        "fps_n": 317,
+        "fps_risp_pct": 0.3824,
+        "fps_risp_n": 68,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "543877": {
+    "player_id": 543877,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2277,
+        "fps_n": 224,
+        "fps_risp_pct": 0.1509,
+        "fps_risp_n": 53,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2687,
+        "fps_n": 201,
+        "fps_risp_pct": 0.3111,
+        "fps_risp_n": 45,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "545121": {
+    "player_id": 545121,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1692,
+        "fps_n": 130,
+        "fps_risp_pct": 0.2286,
+        "fps_risp_n": 35,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2025,
+        "fps_n": 326,
+        "fps_risp_pct": 0.2235,
+        "fps_risp_n": 85,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "545341": {
+    "player_id": 545341,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.259,
+        "fps_n": 305,
+        "fps_risp_pct": 0.2985,
+        "fps_risp_n": 67,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2683,
+        "fps_n": 164,
+        "fps_risp_pct": 0.2727,
+        "fps_risp_n": 44,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "545361": {
+    "player_id": 545361,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1426,
+        "fps_n": 575,
+        "fps_risp_pct": 0.1901,
+        "fps_risp_n": 121,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1554,
+        "fps_n": 386,
+        "fps_risp_pct": 0.175,
+        "fps_risp_n": 80,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "547180": {
+    "player_id": 547180,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.5396,
+        "fps_n": 593,
+        "fps_risp_pct": 0.5755,
+        "fps_risp_n": 139,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4943,
+        "fps_n": 437,
+        "fps_risp_pct": 0.4253,
+        "fps_risp_n": 87,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "553869": {
+    "player_id": 553869,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3746,
+        "fps_n": 291,
+        "fps_risp_pct": 0.314,
+        "fps_risp_n": 86,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2981,
+        "fps_n": 104,
+        "fps_risp_pct": 0.3182,
+        "fps_risp_n": 22,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "553993": {
+    "player_id": 553993,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3598,
+        "fps_n": 681,
+        "fps_risp_pct": 0.4199,
+        "fps_risp_n": 181,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3456,
+        "fps_n": 298,
+        "fps_risp_pct": 0.35,
+        "fps_risp_n": 80,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "571448": {
+    "player_id": 571448,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3281,
+        "fps_n": 442,
+        "fps_risp_pct": 0.3178,
+        "fps_risp_n": 129,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2612,
+        "fps_n": 379,
+        "fps_risp_pct": 0.2885,
+        "fps_risp_n": 104,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "571970": {
+    "player_id": 571970,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2814,
+        "fps_n": 398,
+        "fps_risp_pct": 0.3558,
+        "fps_risp_n": 104,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2287,
+        "fps_n": 363,
+        "fps_risp_pct": 0.23,
+        "fps_risp_n": 100,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "572233": {
+    "player_id": 572233,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3734,
+        "fps_n": 640,
+        "fps_risp_pct": 0.4235,
+        "fps_risp_n": 170,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.347,
+        "fps_n": 415,
+        "fps_risp_pct": 0.3761,
+        "fps_risp_n": 109,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "573262": {
+    "player_id": 573262,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1831,
+        "fps_n": 568,
+        "fps_risp_pct": 0.2437,
+        "fps_risp_n": 119,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1949,
+        "fps_n": 272,
+        "fps_risp_pct": 0.2459,
+        "fps_risp_n": 61,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "575929": {
+    "player_id": 575929,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3862,
+        "fps_n": 567,
+        "fps_risp_pct": 0.4196,
+        "fps_risp_n": 143,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3934,
+        "fps_n": 394,
+        "fps_risp_pct": 0.3776,
+        "fps_risp_n": 98,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "592206": {
+    "player_id": 592206,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.5607,
+        "fps_n": 601,
+        "fps_risp_pct": 0.6282,
+        "fps_risp_n": 156,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4538,
+        "fps_n": 130,
+        "fps_risp_pct": 0.4857,
+        "fps_risp_n": 35,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "592450": {
+    "player_id": 592450,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3258,
+        "fps_n": 712,
+        "fps_risp_pct": 0.2857,
+        "fps_risp_n": 154,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3222,
+        "fps_n": 270,
+        "fps_risp_pct": 0.2593,
+        "fps_risp_n": 54,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "592518": {
+    "player_id": 592518,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3795,
+        "fps_n": 701,
+        "fps_risp_pct": 0.4022,
+        "fps_risp_n": 184,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3254,
+        "fps_n": 421,
+        "fps_risp_pct": 0.3295,
+        "fps_risp_n": 88,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "592626": {
+    "player_id": 592626,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2184,
+        "fps_n": 316,
+        "fps_risp_pct": 0.2195,
+        "fps_risp_n": 82,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2866,
+        "fps_n": 314,
+        "fps_risp_pct": 0.3509,
+        "fps_risp_n": 57,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "592663": {
+    "player_id": 592663,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2906,
+        "fps_n": 561,
+        "fps_risp_pct": 0.3053,
+        "fps_risp_n": 131,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2898,
+        "fps_n": 283,
+        "fps_risp_pct": 0.3636,
+        "fps_risp_n": 66,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "592885": {
+    "player_id": 592885,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2795,
+        "fps_n": 662,
+        "fps_risp_pct": 0.3432,
+        "fps_risp_n": 169,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2157,
+        "fps_n": 306,
+        "fps_risp_pct": 0.2439,
+        "fps_risp_n": 82,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "593428": {
+    "player_id": 593428,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2186,
+        "fps_n": 581,
+        "fps_risp_pct": 0.2166,
+        "fps_risp_n": 157,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2423,
+        "fps_n": 392,
+        "fps_risp_pct": 0.25,
+        "fps_risp_n": 92,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "593871": {
+    "player_id": 593871,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2689,
+        "fps_n": 543,
+        "fps_risp_pct": 0.4098,
+        "fps_risp_n": 122,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2234,
+        "fps_n": 94,
+        "fps_risp_pct": 0.3158,
+        "fps_risp_n": 19,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "595879": {
+    "player_id": 595879,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3654,
+        "fps_n": 468,
+        "fps_risp_pct": 0.4732,
+        "fps_risp_n": 112,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4396,
+        "fps_n": 91,
+        "fps_risp_pct": 0.6087,
+        "fps_risp_n": 23,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "595978": {
+    "player_id": 595978,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4398,
+        "fps_n": 191,
+        "fps_risp_pct": 0.4103,
+        "fps_risp_n": 39,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3718,
+        "fps_n": 156,
+        "fps_risp_pct": 0.3469,
+        "fps_risp_n": 49,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "596019": {
+    "player_id": 596019,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.231,
+        "fps_n": 749,
+        "fps_risp_pct": 0.3841,
+        "fps_risp_n": 138,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2388,
+        "fps_n": 201,
+        "fps_risp_pct": 0.3784,
+        "fps_risp_n": 37,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "596103": {
+    "player_id": 596103,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4269,
+        "fps_n": 171,
+        "fps_risp_pct": 0.4545,
+        "fps_risp_n": 44,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3514,
+        "fps_n": 74,
+        "fps_risp_pct": 0.5625,
+        "fps_risp_n": 16,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "596115": {
+    "player_id": 596115,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.353,
+        "fps_n": 677,
+        "fps_risp_pct": 0.4162,
+        "fps_risp_n": 173,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3476,
+        "fps_n": 187,
+        "fps_risp_pct": 0.3043,
+        "fps_risp_n": 46,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "596146": {
+    "player_id": 596146,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3388,
+        "fps_n": 490,
+        "fps_risp_pct": 0.303,
+        "fps_risp_n": 132,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4107,
+        "fps_n": 56,
+        "fps_risp_pct": 0.5263,
+        "fps_risp_n": 19,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "602104": {
+    "player_id": 602104,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3935,
+        "fps_n": 399,
+        "fps_risp_pct": 0.4257,
+        "fps_risp_n": 101,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.36,
+        "fps_n": 75,
+        "fps_risp_pct": 0.3571,
+        "fps_risp_n": 14,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "605137": {
+    "player_id": 605137,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3352,
+        "fps_n": 546,
+        "fps_risp_pct": 0.4419,
+        "fps_risp_n": 129,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4025,
+        "fps_n": 405,
+        "fps_risp_pct": 0.4348,
+        "fps_risp_n": 115,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "605141": {
+    "player_id": 605141,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1813,
+        "fps_n": 684,
+        "fps_risp_pct": 0.3191,
+        "fps_risp_n": 141,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2055,
+        "fps_n": 292,
+        "fps_risp_pct": 0.274,
+        "fps_risp_n": 73,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "605170": {
+    "player_id": 605170,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3291,
+        "fps_n": 392,
+        "fps_risp_pct": 0.2889,
+        "fps_risp_n": 90,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2448,
+        "fps_n": 286,
+        "fps_risp_pct": 0.2195,
+        "fps_risp_n": 82,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "606115": {
+    "player_id": 606115,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3839,
+        "fps_n": 224,
+        "fps_risp_pct": 0.4318,
+        "fps_risp_n": 44,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3333,
+        "fps_n": 60,
+        "fps_risp_pct": 0.2308,
+        "fps_risp_n": 13,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "606192": {
+    "player_id": 606192,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2643,
+        "fps_n": 560,
+        "fps_risp_pct": 0.2857,
+        "fps_risp_n": 154,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2202,
+        "fps_n": 277,
+        "fps_risp_pct": 0.2703,
+        "fps_risp_n": 74,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "606466": {
+    "player_id": 606466,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2469,
+        "fps_n": 567,
+        "fps_risp_pct": 0.3385,
+        "fps_risp_n": 130,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2489,
+        "fps_n": 438,
+        "fps_risp_pct": 0.3372,
+        "fps_risp_n": 86,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "606992": {
+    "player_id": 606992,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2222,
+        "fps_n": 81,
+        "fps_risp_pct": 0.2381,
+        "fps_risp_n": 21,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2118,
+        "fps_n": 85,
+        "fps_risp_pct": 0.3,
+        "fps_risp_n": 30,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "607043": {
+    "player_id": 607043,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3274,
+        "fps_n": 669,
+        "fps_risp_pct": 0.4132,
+        "fps_risp_n": 167,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3558,
+        "fps_n": 416,
+        "fps_risp_pct": 0.4578,
+        "fps_risp_n": 83,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "607208": {
+    "player_id": 607208,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.383,
+        "fps_n": 658,
+        "fps_risp_pct": 0.4379,
+        "fps_risp_n": 153,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3296,
+        "fps_n": 446,
+        "fps_risp_pct": 0.45,
+        "fps_risp_n": 80,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "608070": {
+    "player_id": 608070,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1717,
+        "fps_n": 693,
+        "fps_risp_pct": 0.1678,
+        "fps_risp_n": 143,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2322,
+        "fps_n": 323,
+        "fps_risp_pct": 0.3108,
+        "fps_risp_n": 74,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "608324": {
+    "player_id": 608324,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1888,
+        "fps_n": 519,
+        "fps_risp_pct": 0.2197,
+        "fps_risp_n": 132,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1849,
+        "fps_n": 465,
+        "fps_risp_pct": 0.1818,
+        "fps_risp_n": 132,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "608348": {
+    "player_id": 608348,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3112,
+        "fps_n": 437,
+        "fps_risp_pct": 0.3231,
+        "fps_risp_n": 130,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.281,
+        "fps_n": 274,
+        "fps_risp_pct": 0.3095,
+        "fps_risp_n": 84,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "608369": {
+    "player_id": 608369,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4667,
+        "fps_n": 450,
+        "fps_risp_pct": 0.5244,
+        "fps_risp_n": 82,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4781,
+        "fps_n": 228,
+        "fps_risp_pct": 0.32,
+        "fps_risp_n": 50,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "608701": {
+    "player_id": 608701,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2366,
+        "fps_n": 224,
+        "fps_risp_pct": 0.2373,
+        "fps_risp_n": 59,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.272,
+        "fps_n": 125,
+        "fps_risp_pct": 0.2857,
+        "fps_risp_n": 28,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "609280": {
+    "player_id": 609280,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3816,
+        "fps_n": 359,
+        "fps_risp_pct": 0.3953,
+        "fps_risp_n": 86,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3498,
+        "fps_n": 263,
+        "fps_risp_pct": 0.4828,
+        "fps_risp_n": 58,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "620443": {
+    "player_id": 620443,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3208,
+        "fps_n": 293,
+        "fps_risp_pct": 0.2787,
+        "fps_risp_n": 61,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3016,
+        "fps_n": 189,
+        "fps_risp_pct": 0.2917,
+        "fps_risp_n": 48,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "621020": {
+    "player_id": 621020,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3891,
+        "fps_n": 658,
+        "fps_risp_pct": 0.4601,
+        "fps_risp_n": 163,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3376,
+        "fps_n": 388,
+        "fps_risp_pct": 0.3333,
+        "fps_risp_n": 111,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "621043": {
+    "player_id": 621043,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3239,
+        "fps_n": 602,
+        "fps_risp_pct": 0.3309,
+        "fps_risp_n": 139,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2847,
+        "fps_n": 144,
+        "fps_risp_pct": 0.2667,
+        "fps_risp_n": 45,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "621438": {
+    "player_id": 621438,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2593,
+        "fps_n": 351,
+        "fps_risp_pct": 0.3284,
+        "fps_risp_n": 67,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2657,
+        "fps_n": 143,
+        "fps_risp_pct": 0.3448,
+        "fps_risp_n": 29,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "621439": {
+    "player_id": 621439,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4477,
+        "fps_n": 554,
+        "fps_risp_pct": 0.4727,
+        "fps_risp_n": 110,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4176,
+        "fps_n": 352,
+        "fps_risp_pct": 0.3881,
+        "fps_risp_n": 67,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "621493": {
+    "player_id": 621493,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2639,
+        "fps_n": 682,
+        "fps_risp_pct": 0.2209,
+        "fps_risp_n": 172,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2359,
+        "fps_n": 462,
+        "fps_risp_pct": 0.225,
+        "fps_risp_n": 80,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "621566": {
+    "player_id": 621566,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2751,
+        "fps_n": 738,
+        "fps_risp_pct": 0.2807,
+        "fps_risp_n": 171,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2572,
+        "fps_n": 451,
+        "fps_risp_pct": 0.2667,
+        "fps_risp_n": 105,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "622268": {
+    "player_id": 622268,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3333,
+        "fps_n": 15,
+        "fps_risp_pct": 0.2,
+        "fps_risp_n": 5,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3448,
+        "fps_n": 116,
+        "fps_risp_pct": 0.3438,
+        "fps_risp_n": 32,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "623168": {
+    "player_id": 623168,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3989,
+        "fps_n": 178,
+        "fps_risp_pct": 0.6383,
+        "fps_risp_n": 47,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3565,
+        "fps_n": 115,
+        "fps_risp_pct": 0.4815,
+        "fps_risp_n": 27,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "624413": {
+    "player_id": 624413,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3329,
+        "fps_n": 724,
+        "fps_risp_pct": 0.3417,
+        "fps_risp_n": 199,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2911,
+        "fps_n": 450,
+        "fps_risp_pct": 0.35,
+        "fps_risp_n": 120,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "624424": {
+    "player_id": 624424,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3176,
+        "fps_n": 488,
+        "fps_risp_pct": 0.4182,
+        "fps_risp_n": 110,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3444,
+        "fps_n": 180,
+        "fps_risp_pct": 0.3902,
+        "fps_risp_n": 41,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "624428": {
+    "player_id": 624428,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2013,
+        "fps_n": 467,
+        "fps_risp_pct": 0.2745,
+        "fps_risp_n": 102,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2451,
+        "fps_n": 102,
+        "fps_risp_pct": 0.24,
+        "fps_risp_n": 25,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "624431": {
+    "player_id": 624431,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2866,
+        "fps_n": 314,
+        "fps_risp_pct": 0.2703,
+        "fps_risp_n": 74,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2614,
+        "fps_n": 88,
+        "fps_risp_pct": 0.25,
+        "fps_risp_n": 16,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "624585": {
+    "player_id": 624585,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3152,
+        "fps_n": 330,
+        "fps_risp_pct": 0.3788,
+        "fps_risp_n": 66,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4164,
+        "fps_n": 341,
+        "fps_risp_pct": 0.5102,
+        "fps_risp_n": 98,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "624641": {
+    "player_id": 624641,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3455,
+        "fps_n": 275,
+        "fps_risp_pct": 0.5821,
+        "fps_risp_n": 67,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3652,
+        "fps_n": 178,
+        "fps_risp_pct": 0.6364,
+        "fps_risp_n": 44,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "630105": {
+    "player_id": 630105,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2156,
+        "fps_n": 538,
+        "fps_risp_pct": 0.3333,
+        "fps_risp_n": 147,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2043,
+        "fps_n": 186,
+        "fps_risp_pct": 0.3404,
+        "fps_risp_n": 47,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "640902": {
+    "player_id": 640902,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3256,
+        "fps_n": 86,
+        "fps_risp_pct": 0.3333,
+        "fps_risp_n": 15,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4085,
+        "fps_n": 71,
+        "fps_risp_pct": 0.6923,
+        "fps_risp_n": 13,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641343": {
+    "player_id": 641343,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3537,
+        "fps_n": 229,
+        "fps_risp_pct": 0.32,
+        "fps_risp_n": 75,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3307,
+        "fps_n": 375,
+        "fps_risp_pct": 0.354,
+        "fps_risp_n": 113,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641355": {
+    "player_id": 641355,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2894,
+        "fps_n": 691,
+        "fps_risp_pct": 0.3333,
+        "fps_risp_n": 165,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3349,
+        "fps_n": 430,
+        "fps_risp_pct": 0.3696,
+        "fps_risp_n": 92,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641487": {
+    "player_id": 641487,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2707,
+        "fps_n": 676,
+        "fps_risp_pct": 0.2183,
+        "fps_risp_n": 142,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.25,
+        "fps_n": 348,
+        "fps_risp_pct": 0.2344,
+        "fps_risp_n": 64,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641555": {
+    "player_id": 641555,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.217,
+        "fps_n": 106,
+        "fps_risp_pct": 0.2963,
+        "fps_risp_n": 27,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2376,
+        "fps_n": 101,
+        "fps_risp_pct": 0.1786,
+        "fps_risp_n": 28,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641584": {
+    "player_id": 641584,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3612,
+        "fps_n": 227,
+        "fps_risp_pct": 0.2963,
+        "fps_risp_n": 54,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.37,
+        "fps_n": 100,
+        "fps_risp_pct": 0.5,
+        "fps_risp_n": 18,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641598": {
+    "player_id": 641598,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2442,
+        "fps_n": 303,
+        "fps_risp_pct": 0.3133,
+        "fps_risp_n": 83,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3143,
+        "fps_n": 140,
+        "fps_risp_pct": 0.3824,
+        "fps_risp_n": 34,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641680": {
+    "player_id": 641680,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3063,
+        "fps_n": 444,
+        "fps_risp_pct": 0.4571,
+        "fps_risp_n": 105,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3981,
+        "fps_n": 211,
+        "fps_risp_pct": 0.4412,
+        "fps_risp_n": 68,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641857": {
+    "player_id": 641857,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3382,
+        "fps_n": 612,
+        "fps_risp_pct": 0.4014,
+        "fps_risp_n": 142,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3158,
+        "fps_n": 247,
+        "fps_risp_pct": 0.3443,
+        "fps_risp_n": 61,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "641933": {
+    "player_id": 641933,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3548,
+        "fps_n": 217,
+        "fps_risp_pct": 0.4423,
+        "fps_risp_n": 52,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2751,
+        "fps_n": 189,
+        "fps_risp_pct": 0.3171,
+        "fps_risp_n": 41,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "642086": {
+    "player_id": 642086,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.292,
+        "fps_n": 226,
+        "fps_risp_pct": 0.3889,
+        "fps_risp_n": 54,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.372,
+        "fps_n": 250,
+        "fps_risp_pct": 0.3871,
+        "fps_risp_n": 62,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "642201": {
+    "player_id": 642201,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2842,
+        "fps_n": 285,
+        "fps_risp_pct": 0.3836,
+        "fps_risp_n": 73,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2535,
+        "fps_n": 142,
+        "fps_risp_pct": 0.3846,
+        "fps_risp_n": 39,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "642215": {
+    "player_id": 642215,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2937,
+        "fps_n": 126,
+        "fps_risp_pct": 0.3462,
+        "fps_risp_n": 26,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3636,
+        "fps_n": 77,
+        "fps_risp_pct": 0.48,
+        "fps_risp_n": 25,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "642350": {
+    "player_id": 642350,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.25,
+        "fps_n": 48,
+        "fps_risp_pct": 0.25,
+        "fps_risp_n": 16,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3942,
+        "fps_n": 104,
+        "fps_risp_pct": 0.3846,
+        "fps_risp_n": 26,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "642708": {
+    "player_id": 642708,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3902,
+        "fps_n": 205,
+        "fps_risp_pct": 0.375,
+        "fps_risp_n": 40,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3277,
+        "fps_n": 177,
+        "fps_risp_pct": 0.3878,
+        "fps_risp_n": 49,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "642715": {
+    "player_id": 642715,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2904,
+        "fps_n": 699,
+        "fps_risp_pct": 0.366,
+        "fps_risp_n": 153,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2701,
+        "fps_n": 411,
+        "fps_risp_pct": 0.3673,
+        "fps_risp_n": 98,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "642727": {
+    "player_id": 642727,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4,
+        "fps_n": 5,
+        "fps_risp_pct": 1.0,
+        "fps_risp_n": 2,
+        "source": "Statcast 2025"
+      }
+    }
+  },
+  "642851": {
+    "player_id": 642851,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2542,
+        "fps_n": 118,
+        "fps_risp_pct": 0.2333,
+        "fps_risp_n": 30,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.371,
+        "fps_n": 62,
+        "fps_risp_pct": 0.3125,
+        "fps_risp_n": 16,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "643217": {
+    "player_id": 643217,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3755,
+        "fps_n": 482,
+        "fps_risp_pct": 0.4035,
+        "fps_risp_n": 114,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4038,
+        "fps_n": 312,
+        "fps_risp_pct": 0.443,
+        "fps_risp_n": 79,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "643289": {
+    "player_id": 643289,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3911,
+        "fps_n": 404,
+        "fps_risp_pct": 0.4946,
+        "fps_risp_n": 93,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2946,
+        "fps_n": 404,
+        "fps_risp_pct": 0.2556,
+        "fps_risp_n": 90,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "643376": {
+    "player_id": 643376,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2794,
+        "fps_n": 340,
+        "fps_risp_pct": 0.3537,
+        "fps_risp_n": 82,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2828,
+        "fps_n": 145,
+        "fps_risp_pct": 0.3529,
+        "fps_risp_n": 34,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "643396": {
+    "player_id": 643396,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.241,
+        "fps_n": 473,
+        "fps_risp_pct": 0.3784,
+        "fps_risp_n": 111,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2778,
+        "fps_n": 144,
+        "fps_risp_pct": 0.4412,
+        "fps_risp_n": 34,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "643446": {
+    "player_id": 643446,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.381,
+        "fps_n": 462,
+        "fps_risp_pct": 0.4862,
+        "fps_risp_n": 109,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4194,
+        "fps_n": 310,
+        "fps_risp_pct": 0.5,
+        "fps_risp_n": 80,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "644433": {
+    "player_id": 644433,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3429,
+        "fps_n": 35,
+        "fps_risp_pct": 0.3,
+        "fps_risp_n": 10,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4,
+        "fps_n": 30,
+        "fps_risp_pct": 0.4,
+        "fps_risp_n": 10,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "645277": {
+    "player_id": 645277,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3739,
+        "fps_n": 682,
+        "fps_risp_pct": 0.3967,
+        "fps_risp_n": 184,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3857,
+        "fps_n": 446,
+        "fps_risp_pct": 0.4375,
+        "fps_risp_n": 96,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "645302": {
+    "player_id": 645302,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.5923,
+        "fps_n": 130,
+        "fps_risp_pct": 0.64,
+        "fps_risp_n": 25,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4409,
+        "fps_n": 127,
+        "fps_risp_pct": 0.5161,
+        "fps_risp_n": 31,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "646240": {
+    "player_id": 646240,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.332,
+        "fps_n": 738,
+        "fps_risp_pct": 0.4269,
+        "fps_risp_n": 171,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2426,
+        "fps_n": 437,
+        "fps_risp_pct": 0.2857,
+        "fps_risp_n": 105,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "647304": {
+    "player_id": 647304,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4393,
+        "fps_n": 626,
+        "fps_risp_pct": 0.4971,
+        "fps_risp_n": 171,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.399,
+        "fps_n": 416,
+        "fps_risp_pct": 0.4194,
+        "fps_risp_n": 93,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "650333": {
+    "player_id": 650333,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.196,
+        "fps_n": 699,
+        "fps_risp_pct": 0.184,
+        "fps_risp_n": 163,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2113,
+        "fps_n": 426,
+        "fps_risp_pct": 0.3067,
+        "fps_risp_n": 75,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "650391": {
+    "player_id": 650391,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.6667,
+        "fps_n": 3,
+        "fps_risp_pct": null,
+        "fps_risp_n": 0,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4054,
+        "fps_n": 37,
+        "fps_risp_pct": 0.25,
+        "fps_risp_n": 8,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "650402": {
+    "player_id": 650402,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3017,
+        "fps_n": 663,
+        "fps_risp_pct": 0.2903,
+        "fps_risp_n": 124,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2796,
+        "fps_n": 211,
+        "fps_risp_pct": 0.1395,
+        "fps_risp_n": 43,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "650489": {
+    "player_id": 650489,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4139,
+        "fps_n": 459,
+        "fps_risp_pct": 0.4255,
+        "fps_risp_n": 94,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3961,
+        "fps_n": 356,
+        "fps_risp_pct": 0.3418,
+        "fps_risp_n": 79,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "650490": {
+    "player_id": 650490,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1888,
+        "fps_n": 662,
+        "fps_risp_pct": 0.0903,
+        "fps_risp_n": 144,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2591,
+        "fps_n": 440,
+        "fps_risp_pct": 0.2326,
+        "fps_risp_n": 86,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "650559": {
+    "player_id": 650559,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3607,
+        "fps_n": 61,
+        "fps_risp_pct": 0.3077,
+        "fps_risp_n": 13,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1111,
+        "fps_n": 9,
+        "fps_risp_pct": 0.0,
+        "fps_risp_n": 1,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "650859": {
+    "player_id": 650859,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3633,
+        "fps_n": 556,
+        "fps_risp_pct": 0.4954,
+        "fps_risp_n": 109,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.287,
+        "fps_n": 230,
+        "fps_risp_pct": 0.3636,
+        "fps_risp_n": 77,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "655316": {
+    "player_id": 655316,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2057,
+        "fps_n": 141,
+        "fps_risp_pct": 0.2308,
+        "fps_risp_n": 39,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2275,
+        "fps_n": 189,
+        "fps_risp_pct": 0.3529,
+        "fps_risp_n": 51,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656305": {
+    "player_id": 656305,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2987,
+        "fps_n": 549,
+        "fps_risp_pct": 0.3617,
+        "fps_risp_n": 141,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2654,
+        "fps_n": 358,
+        "fps_risp_pct": 0.2759,
+        "fps_risp_n": 87,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656484": {
+    "player_id": 656484,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4639,
+        "fps_n": 97,
+        "fps_risp_pct": 0.6364,
+        "fps_risp_n": 22,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4167,
+        "fps_n": 192,
+        "fps_risp_pct": 0.4211,
+        "fps_risp_n": 57,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656537": {
+    "player_id": 656537,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4383,
+        "fps_n": 162,
+        "fps_risp_pct": 0.5,
+        "fps_risp_n": 50,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4125,
+        "fps_n": 160,
+        "fps_risp_pct": 0.375,
+        "fps_risp_n": 40,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656555": {
+    "player_id": 656555,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1848,
+        "fps_n": 341,
+        "fps_risp_pct": 0.2473,
+        "fps_risp_n": 93,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2753,
+        "fps_n": 287,
+        "fps_risp_pct": 0.2687,
+        "fps_risp_n": 67,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656577": {
+    "player_id": 656577,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.4019,
+        "fps_n": 107,
+        "fps_risp_pct": 0.1667,
+        "fps_risp_n": 18,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.5079,
+        "fps_n": 63,
+        "fps_risp_pct": 0.7273,
+        "fps_risp_n": 11,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656716": {
+    "player_id": 656716,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3217,
+        "fps_n": 544,
+        "fps_risp_pct": 0.313,
+        "fps_risp_n": 131,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3603,
+        "fps_n": 272,
+        "fps_risp_pct": 0.32,
+        "fps_risp_n": 50,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656775": {
+    "player_id": 656775,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.33,
+        "fps_n": 506,
+        "fps_risp_pct": 0.319,
+        "fps_risp_n": 116,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.341,
+        "fps_n": 349,
+        "fps_risp_pct": 0.4,
+        "fps_risp_n": 100,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656811": {
+    "player_id": 656811,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.287,
+        "fps_n": 568,
+        "fps_risp_pct": 0.3681,
+        "fps_risp_n": 144,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.224,
+        "fps_n": 366,
+        "fps_risp_pct": 0.27,
+        "fps_risp_n": 100,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656941": {
+    "player_id": 656941,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2746,
+        "fps_n": 743,
+        "fps_risp_pct": 0.2553,
+        "fps_risp_n": 188,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3072,
+        "fps_n": 446,
+        "fps_risp_pct": 0.3514,
+        "fps_risp_n": 74,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "656976": {
+    "player_id": 656976,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2252,
+        "fps_n": 302,
+        "fps_risp_pct": 0.2656,
+        "fps_risp_n": 64,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.26,
+        "fps_n": 100,
+        "fps_risp_pct": 0.3929,
+        "fps_risp_n": 28,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "657041": {
+    "player_id": 657041,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3444,
+        "fps_n": 151,
+        "fps_risp_pct": 0.2812,
+        "fps_risp_n": 32,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3054,
+        "fps_n": 298,
+        "fps_risp_pct": 0.3662,
+        "fps_risp_n": 71,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "657136": {
+    "player_id": 657136,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3282,
+        "fps_n": 195,
+        "fps_risp_pct": 0.4231,
+        "fps_risp_n": 52,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.32,
+        "fps_n": 150,
+        "fps_risp_pct": 0.4118,
+        "fps_risp_n": 34,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "657656": {
+    "player_id": 657656,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2892,
+        "fps_n": 498,
+        "fps_risp_pct": 0.3178,
+        "fps_risp_n": 129,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3318,
+        "fps_n": 214,
+        "fps_risp_pct": 0.3947,
+        "fps_risp_n": 38,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "657757": {
+    "player_id": 657757,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1975,
+        "fps_n": 562,
+        "fps_risp_pct": 0.2553,
+        "fps_risp_n": 141,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1652,
+        "fps_n": 345,
+        "fps_risp_pct": 0.2222,
+        "fps_risp_n": 63,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660162": {
+    "player_id": 660162,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3218,
+        "fps_n": 289,
+        "fps_risp_pct": 0.377,
+        "fps_risp_n": 61,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1844,
+        "fps_n": 141,
+        "fps_risp_pct": 0.2162,
+        "fps_risp_n": 37,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660271": {
+    "player_id": 660271,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3306,
+        "fps_n": 738,
+        "fps_risp_pct": 0.2946,
+        "fps_risp_n": 129,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3568,
+        "fps_n": 440,
+        "fps_risp_pct": 0.3438,
+        "fps_risp_n": 96,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660644": {
+    "player_id": 660644,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.5204,
+        "fps_n": 98,
+        "fps_risp_pct": 0.6286,
+        "fps_risp_n": 35,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4762,
+        "fps_n": 21,
+        "fps_risp_pct": 0.6667,
+        "fps_risp_n": 6,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660670": {
+    "player_id": 660670,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3932,
+        "fps_n": 412,
+        "fps_risp_pct": 0.359,
+        "fps_risp_n": 78,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3975,
+        "fps_n": 244,
+        "fps_risp_pct": 0.3077,
+        "fps_risp_n": 39,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660688": {
+    "player_id": 660688,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3741,
+        "fps_n": 278,
+        "fps_risp_pct": 0.4328,
+        "fps_risp_n": 67,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4035,
+        "fps_n": 228,
+        "fps_risp_pct": 0.3594,
+        "fps_risp_n": 64,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660710": {
+    "player_id": 660710,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.0,
+        "fps_n": 3,
+        "fps_risp_pct": 0.0,
+        "fps_risp_n": 1,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2708,
+        "fps_n": 96,
+        "fps_risp_pct": 0.3333,
+        "fps_risp_n": 15,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660821": {
+    "player_id": 660821,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3574,
+        "fps_n": 498,
+        "fps_risp_pct": 0.4018,
+        "fps_risp_n": 112,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4274,
+        "fps_n": 241,
+        "fps_risp_pct": 0.3519,
+        "fps_risp_n": 54,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "660844": {
+    "player_id": 660844,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2051,
+        "fps_n": 117,
+        "fps_risp_pct": 0.1765,
+        "fps_risp_n": 34,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1846,
+        "fps_n": 130,
+        "fps_risp_pct": 0.2903,
+        "fps_risp_n": 31,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "661388": {
+    "player_id": 661388,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3631,
+        "fps_n": 672,
+        "fps_risp_pct": 0.4124,
+        "fps_risp_n": 177,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3621,
+        "fps_n": 417,
+        "fps_risp_pct": 0.4538,
+        "fps_risp_n": 119,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "662139": {
+    "player_id": 662139,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3542,
+        "fps_n": 288,
+        "fps_risp_pct": 0.3816,
+        "fps_risp_n": 76,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.3533,
+        "fps_n": 334,
+        "fps_risp_pct": 0.3472,
+        "fps_risp_n": 72,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "663330": {
+    "player_id": 663330,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.3165,
+        "fps_n": 158,
+        "fps_risp_pct": 0.4,
+        "fps_risp_n": 35,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4444,
+        "fps_n": 117,
+        "fps_risp_pct": 0.4,
+        "fps_risp_n": 35,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "663368": {
+    "player_id": 663368,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.1486,
+        "fps_n": 175,
+        "fps_risp_pct": 0.1458,
+        "fps_risp_n": 48,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.1961,
+        "fps_n": 102,
+        "fps_risp_pct": 0.2667,
+        "fps_risp_n": 30,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "663457": {
+    "player_id": 663457,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2156,
+        "fps_n": 589,
+        "fps_risp_pct": 0.2537,
+        "fps_risp_n": 134,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2057,
+        "fps_n": 141,
+        "fps_risp_pct": 0.2051,
+        "fps_risp_n": 39,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "663494": {
+    "player_id": 663494,
+    "seasons": {
+      "2026": {
+        "fps_pct": 0.2632,
+        "fps_n": 76,
+        "fps_risp_pct": 0.125,
+        "fps_risp_n": 16,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "663538": {
+    "player_id": 663538,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2519,
+        "fps_n": 675,
+        "fps_risp_pct": 0.2683,
+        "fps_risp_n": 164,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2291,
+        "fps_n": 454,
+        "fps_risp_pct": 0.3739,
+        "fps_risp_n": 115,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "663584": {
+    "player_id": 663584,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2857,
+        "fps_n": 84,
+        "fps_risp_pct": 0.4091,
+        "fps_risp_n": 22,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.4,
+        "fps_n": 20,
+        "fps_risp_pct": 0.375,
+        "fps_risp_n": 8,
+        "source": "Statcast 2026"
+      }
+    }
+  },
+  "663586": {
+    "player_id": 663586,
+    "seasons": {
+      "2025": {
+        "fps_pct": 0.2842,
+        "fps_n": 461,
+        "fps_risp_pct": 0.3273,
+        "fps_risp_n": 110,
+        "source": "Statcast 2025"
+      },
+      "2026": {
+        "fps_pct": 0.2656,
+        "fps_n": 418,
+        "fps_risp_pct": 0.3028,
+        "fps_risp_n": 109,
+        "source": "Statcast 2026"
+      }
+    }
+  }
+}

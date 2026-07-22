@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pregame Analytics — Tigres del Licey</title>
+<link rel="icon" href="assets/licey-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="index.html">
+    <img src="assets/licey-logo.svg" alt="Tigres del Licey">
+    <div>
+      <strong>Tigres del Licey</strong>
+      <span data-i18n="brandSubPregame">Analytics · Pregame</span>
+    </div>
+  </a>
+  <nav class="top-links">
+    <a href="index.html" data-i18n="navStats">Stats</a>
+    <a href="free_agent_pool.html" data-i18n="navFA">Free Agent Pool</a>
+    <a class="active" href="pregame.html" data-i18n="navPregame">Pregame Analytics</a>
+    <div class="lang-toggle" aria-label="Language">
+      <button type="button" data-lang="en" data-i18n="langEn" onclick="setLang('en')">English</button>
+      <button type="button" data-lang="es" data-i18n="langEs" onclick="setLang('es')">Español</button>
+    </div>
+  </nav>
+</div>
+
+<header class="hero">
+  <img src="assets/licey-logo.svg" alt="Tigres del Licey logo">
+  <h1 data-i18n="heroPregame">Pregame Analytics</h1>
+  <p data-i18n="tagline">Licey Advance Scouting creado por Colby Morris</p>
+  <p style="margin-top:8px;color:#b8c7dc;font-size:12px" data-i18n="heroPregameSub">Advance reports · Licey hitters / pitchers · opposing LIDOM · Prospect Savant + Statcast</p>
+</header>
+
+<main class="page">
+  <div class="tab-bar">
+    <button class="tab active" data-tab="lineup" onclick="switchTab('lineup')" data-i18n="lineupTab">Lineup Spot Success</button>
+    <button class="tab" data-tab="matchup" onclick="switchTab('matchup')" data-i18n="matchupTab">Pitcher vs Batter</button>
+    <button class="tab" data-tab="br" onclick="switchTab('br')" data-i18n="brTab">Baserunning &amp; Bunting</button>
+    <button class="tab" data-tab="stuff" onclick="switchTab('stuff')" data-i18n="stuffTab">Opposing Stuff</button>
+    <button class="tab" data-tab="spray" onclick="switchTab('spray')" data-i18n="sprayTab">Spray Charts</button>
+    <button class="tab" data-tab="ideas" onclick="switchTab('ideas')" data-i18n="ideasTab">Other Ideas</button>
+  </div>
+
+  <div id="loading" class="loading">Loading pregame caches…</div>
+
+  <div id="panel-lineup" class="panel active">
+    <div class="section-label">Licey hitters — production by lineup spot</div>
+    <div class="note">LIDOM 2025 from winter boxscores, plus each hitter’s <strong>MLB / AAA / AA</strong> lineup-spot success from Stats API game logs (2024–2026 where available). FPS% from MLB Statcast when tracked.</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="lineup-search" placeholder="Hitter" oninput="renderLineup()"></div>
+      <div class="filter-field"><label data-i18n="level">Level</label>
+        <select id="lineup-level" onchange="renderLineup()">
+          <option value="all">All levels</option>
+          <option value="LIDOM" selected>LIDOM</option>
+          <option value="MLB">MLB</option>
+          <option value="AAA">AAA</option>
+          <option value="AA">AA</option>
+        </select>
+      </div>
+      <div class="filter-field"><label data-i18n="season">Season</label>
+        <select id="lineup-season" onchange="renderLineup()"><option value="all">All seasons</option></select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-lineup"><thead><tr>
+        <th onclick="sortTbl('tbl-lineup',0)">Hitter</th>
+        <th onclick="sortTbl('tbl-lineup',1)">Level</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',2)">Season</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',3)">Spot</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',4)">G</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',5)">PA</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',6)">AB</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',7)">H</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',8)">HR</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',9)">RBI</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',10)">AVG</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',11)">SLG</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',12)">FPS%</th>
+        <th class="num" onclick="sortTbl('tbl-lineup',13)">FPS% RISP</th>
+        <th onclick="sortTbl('tbl-lineup',14)">Source</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div id="panel-matchup" class="panel">
+    <div class="section-label">Licey pitchers vs opposing LIDOM hitters</div>
+    <div class="note">Built from LIDOM 2025 live play-by-play. Filter by opposing hitter’s LIDOM team.</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="match-search" placeholder="Pitcher or hitter" oninput="renderMatchup()"></div>
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="match-team" onchange="renderMatchup()">
+          <option value="all">All Teams</option>
+          <option value="AGU">Águilas Cibaeñas</option>
+          <option value="TOR">Toros del Este</option>
+          <option value="EST">Estrellas Orientales</option>
+          <option value="GIG">Gigantes del Cibao</option>
+          <option value="ESC">Leones del Escogido</option>
+        </select>
+      </div>
+      <div class="filter-field"><label data-i18n="minPA">Min PA</label>
+        <select id="match-minpa" onchange="renderMatchup()">
+          <option value="3">Min 3 PA</option>
+          <option value="1">Min 1 PA</option>
+          <option value="5">Min 5 PA</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-match"><thead><tr>
+        <th onclick="sortTbl('tbl-match',0)">Pitcher</th>
+        <th onclick="sortTbl('tbl-match',1)">Hitter</th>
+        <th onclick="sortTbl('tbl-match',2)">Team</th>
+        <th class="num" onclick="sortTbl('tbl-match',3)">PA</th>
+        <th class="num" onclick="sortTbl('tbl-match',4)">AB</th>
+        <th class="num" onclick="sortTbl('tbl-match',5)">H</th>
+        <th class="num" onclick="sortTbl('tbl-match',6)">HR</th>
+        <th class="num" onclick="sortTbl('tbl-match',7)">BB</th>
+        <th class="num" onclick="sortTbl('tbl-match',8)">SO</th>
+        <th class="num" onclick="sortTbl('tbl-match',9)">AVG</th>
+        <th class="num" onclick="sortTbl('tbl-match',10)">SLG</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div id="panel-br" class="panel">
+    <div class="section-label">LIDOM hitters — baserunning &amp; bunting</div>
+    <div class="note">Season SB/CS/sac bunts from MLB winter stats. Low-PA hitters may show Prospect Savant AAA fallback rates when available. FPS% from MLB Statcast when tracked.</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="br-search" placeholder="Hitter / team" oninput="renderBR()"></div>
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="br-team" onchange="renderBR()">
+          <option value="all">All Teams</option>
+          <option value="LIC">Tigres del Licey</option>
+          <option value="AGU">Águilas Cibaeñas</option>
+          <option value="TOR">Toros del Este</option>
+          <option value="EST">Estrellas Orientales</option>
+          <option value="GIG">Gigantes del Cibao</option>
+          <option value="ESC">Leones del Escogido</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-br"><thead><tr>
+        <th onclick="sortTbl('tbl-br',0)">Hitter</th>
+        <th onclick="sortTbl('tbl-br',1)">Team</th>
+        <th class="num" onclick="sortTbl('tbl-br',2)">PA</th>
+        <th class="num" onclick="sortTbl('tbl-br',3)">SB</th>
+        <th class="num" onclick="sortTbl('tbl-br',4)">CS</th>
+        <th class="num" onclick="sortTbl('tbl-br',5)">SB%</th>
+        <th class="num" onclick="sortTbl('tbl-br',6)">Sac</th>
+        <th class="num" onclick="sortTbl('tbl-br',7)">Sac/PA</th>
+        <th class="num" onclick="sortTbl('tbl-br',8)">FPS%</th>
+        <th class="num" onclick="sortTbl('tbl-br',9)">FPS% RISP</th>
+        <th onclick="sortTbl('tbl-br',10)">AAA fallback</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div id="panel-stuff" class="panel">
+    <div class="section-label">Advance scouting — opposing pitcher Stuff+</div>
+    <div class="note">AAA / MiLB tracking via Prospect Savant. MLB arms use PS when tracked; otherwise marked for Statcast stuff index.</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="stuff-search" placeholder="Pitcher / team" oninput="renderStuff()"></div>
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="stuff-team" onchange="renderStuff()">
+          <option value="all">All Teams</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-stuff"><thead><tr>
+        <th onclick="sortTbl('tbl-stuff',0)">Pitcher</th>
+        <th onclick="sortTbl('tbl-stuff',1)">Team</th>
+        <th class="num" onclick="sortTbl('tbl-stuff',2)">Stuff+</th>
+        <th class="num" onclick="sortTbl('tbl-stuff',3)">Pitches</th>
+        <th onclick="sortTbl('tbl-stuff',4)">Level</th>
+        <th onclick="sortTbl('tbl-stuff',5)">Source</th>
+        <th>Arsenal</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div id="panel-spray" class="panel">
+    <div class="section-label">Spray charts — nobody on · RISP · 2 strikes</div>
+    <div class="warn-box" id="spray-note">Loading spray availability note…</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="spray-team" onchange="onSprayTeamChange()">
+          <option value="all">All Teams</option>
+          <option value="AGU">Águilas Cibaeñas</option>
+          <option value="TOR">Toros del Este</option>
+          <option value="EST">Estrellas Orientales</option>
+          <option value="GIG">Gigantes del Cibao</option>
+          <option value="ESC">Leones del Escogido</option>
+          <option value="LIC">Tigres del Licey</option>
+        </select>
+      </div>
+      <div class="filter-field"><label data-i18n="player">Player</label><select id="spray-player" onchange="renderSpray()"></select></div>
+      <div class="filter-field"><label data-i18n="split">Split</label>
+        <select id="spray-split" onchange="renderSpray()">
+          <option value="nobody_on">Nobody on</option>
+          <option value="risp">RISP</option>
+          <option value="two_strikes">2 strikes</option>
+        </select>
+      </div>
+    </div>
+    <div id="spray-mlb" class="spray-grid"></div>
+    <div class="section-label" style="margin-top:20px">AAA directional proxy (green = above pool avg · red = below)</div>
+    <div class="table-wrap">
+      <table id="tbl-aaa-proxy"><thead><tr>
+        <th>Hitter</th><th>Team</th><th>Level</th>
+        <th class="num">Pull</th><th class="num">Pull Air</th><th class="num">Oppo Air</th><th>Note</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div id="panel-ideas" class="panel">
+    <div class="section-label">Other analytics worth adding — pick what you want next</div>
+    <div class="ideas" id="ideas-grid"></div>
+  </div>
+</main>
+<script src="i18n.js"></script>
+<script>
+const IDEAS = [
+  {t:'Catcher framing / pop time', d:'Opposing catchers: framing runs, exchange, CS% vs Licey runners. Useful for SB green lights.'},
+  {t:'Pitch usage by count', d:'Opposing starters: first-pitch%, 0-2 / 1-2 / 3-2 pitch mix from PS or Statcast.'},
+  {t:'Platoon splits matrix', d:'Licey bats vs RHP/LHP and vs opposing arms — wOBA/OPS by platoon from LIDOM + AAA.'},
+  {t:'Outfield jump / arm grades', d:'Advance OF defense: jump, route, arm strength for extra-base decisions.'},
+  {t:'Infield shift / spray heatmaps', d:'Combine MLB sprays with LIDOM pull rates for positioning cards.'},
+  {t:'Pitch tunneling / shape', d:'IVB/HB overlays for opposing arsenals.'},
+  {t:'Leverage / RE24 by role', d:'Which Licey relievers crush high-leverage vs which opposing bats.'},
+  {t:'Time-to-home / WP/PB', d:'Stolen base windows vs catcher+pitcher.'},
+  {t:'Bunt defense alignments', d:'Where opposing bunters push vs pull; 1B/3B crash recommendations.'},
+  {t:'Weather / park factors', d:'Quisqueya and road parks — run environment for game scripts.'},
+  {t:'Injury / workload flags', d:'Pitch counts, days rest, recent velo drop from PS for opposing starters.'},
+  {t:'Umpire tendencies', d:'Zone size / called strike% if available for LIDOM crews.'},
+];
+const TEAM_NAMES = {
+  AGU:'Águilas Cibaeñas', TOR:'Toros del Este', EST:'Estrellas Orientales',
+  GIG:'Gigantes del Cibao', ESC:'Leones del Escogido', LIC:'Tigres del Licey',
+};
+let CACHE = {}, FPS = {}, sortState = {};
+const pct = v => v == null ? '—' : (v*100).toFixed(1)+'%';
+
+function fpsFor(pid) {
+  const row = FPS[String(pid)];
+  if (!row?.seasons) return { fps: null, fpsRisp: null };
+  for (const y of ['2025','2026']) {
+    if (row.seasons[y]?.fps_pct != null) {
+      return { fps: row.seasons[y].fps_pct, fpsRisp: row.seasons[y].fps_risp_pct };
+    }
+  }
+  return { fps: null, fpsRisp: null };
+}
+function relClass(val, avg) {
+  if (val == null || avg == null) return '';
+  if (val > avg) return 'good';
+  if (val < avg) return 'bad';
+  return '';
+}
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id===`panel-${name}`));
+  if(name==='spray') renderSpray();
+}
+function sortTbl(id,col){
+  const key=id+col; sortState[key]=!sortState[key]; const asc=sortState[key];
+  const tb=document.querySelector('#'+id+' tbody');
+  const rows=[...tb.rows].sort((a,b)=>{
+    const av=a.cells[col].textContent.replace('%','').trim();
+    const bv=b.cells[col].textContent.replace('%','').trim();
+    const an=parseFloat(av), bn=parseFloat(bv);
+    if(!isNaN(an)&&!isNaN(bn)) return asc?an-bn:bn-an;
+    return asc?av.localeCompare(bv):bv.localeCompare(av);
+  });
+  document.querySelectorAll('#'+id+' thead th').forEach((th,i)=>th.classList.toggle('sorted',i===col));
+  rows.forEach(r=>tb.appendChild(r));
+}
+function renderLineup(){
+  const q=(document.getElementById('lineup-search').value||'').toLowerCase();
+  const level=document.getElementById('lineup-level').value;
+  const season=document.getElementById('lineup-season').value;
+  const rows=(CACHE.lineup||[]).filter(r=>{
+    if(q && !(r.name||'').toLowerCase().includes(q)) return false;
+    if(level!=='all' && (r.level||'LIDOM')!==level) return false;
+    if(season!=='all' && String(r.season||'')!==String(season)) return false;
+    return true;
+  });
+  document.querySelector('#tbl-lineup tbody').innerHTML = rows.map(r=>{
+    const f=fpsFor(r.player_id);
+    return `<tr>
+    <td class="player-name">${r.name}</td>
+    <td>${r.level||'LIDOM'}</td>
+    <td class="num">${r.season||'—'}</td>
+    <td class="num">${r.lineup_spot}</td>
+    <td class="num">${r.games}</td><td class="num">${r.PA}</td><td class="num">${r.AB}</td>
+    <td class="num">${r.H}</td><td class="num">${r.HR}</td><td class="num">${r.RBI}</td>
+    <td class="num">${r.AVG??'—'}</td><td class="num">${r.SLG??'—'}</td>
+    <td class="num">${pct(f.fps)}</td><td class="num">${pct(f.fpsRisp)}</td>
+    <td>${r.source||''}</td></tr>`;
+  }).join('');
+}
+function fillLineupSeasons(){
+  const seasons=[...new Set((CACHE.lineup||[]).map(r=>r.season).filter(Boolean))].sort((a,b)=>b-a);
+  const sel=document.getElementById('lineup-season');
+  sel.innerHTML = '<option value="all">All seasons</option>' + seasons.map(s=>`<option value="${s}">${s}</option>`).join('');
+}
+function renderMatchup(){
+  const q=(document.getElementById('match-search').value||'').toLowerCase();
+  const team=document.getElementById('match-team').value;
+  const minPA=Number(document.getElementById('match-minpa').value||3);
+  const rows=(CACHE.matchup||[]).filter(r=>{
+    if(r.PA<minPA) return false;
+    if(team!=='all' && r.hitter_team!==team) return false;
+    if(q && !`${r.pitcher_name} ${r.hitter_name}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.querySelector('#tbl-match tbody').innerHTML = rows.map(r=>`<tr>
+    <td class="player-name">${r.pitcher_name}</td><td>${r.hitter_name}</td>
+    <td class="team-cell">${r.hitter_team||'—'}</td>
+    <td class="num">${r.PA}</td><td class="num">${r.AB}</td><td class="num">${r.H}</td>
+    <td class="num">${r.HR}</td><td class="num">${r.BB}</td><td class="num">${r.SO}</td>
+    <td class="num">${r.AVG??'—'}</td><td class="num">${r.SLG??'—'}</td>
+  </tr>`).join('');
+}
+function renderBR(){
+  const q=(document.getElementById('br-search').value||'').toLowerCase();
+  const team=document.getElementById('br-team').value;
+  const rows=(CACHE.br||[]).filter(r=>{
+    if(team!=='all' && r.team!==team) return false;
+    if(q && !`${r.name} ${r.team}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.querySelector('#tbl-br tbody').innerHTML = rows.map(r=>{
+    const fb=r.aaa_fallback?`${r.aaa_fallback.level_key} · pull ${r.aaa_fallback.pull??'—'}`:'—';
+    const f=fpsFor(r.player_id);
+    return `<tr>
+      <td class="player-name">${r.name}</td><td class="team-cell">${r.team||'—'}</td>
+      <td class="num">${r.PA}</td><td class="num">${r.SB}</td><td class="num">${r.CS}</td>
+      <td class="num">${r.SB_pct!=null?(r.SB_pct*100).toFixed(0)+'%':'—'}</td>
+      <td class="num">${r.sac_bunts}</td><td class="num">${r.sac_per_pa??'—'}</td>
+      <td class="num">${pct(f.fps)}</td><td class="num">${pct(f.fpsRisp)}</td>
+      <td>${fb}</td></tr>`;
+  }).join('');
+}
+function fillStuffTeams(){
+  const teams=[...new Set((CACHE.stuff||[]).map(r=>r.team).filter(Boolean))].sort();
+  const sel=document.getElementById('stuff-team');
+  sel.innerHTML = '<option value="all">All Teams</option>' + teams.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+function renderStuff(){
+  const q=(document.getElementById('stuff-search').value||'').toLowerCase();
+  const team=document.getElementById('stuff-team').value;
+  const rows=(CACHE.stuff||[]).filter(r=>{
+    if(team!=='all' && r.team!==team) return false;
+    if(q && !`${r.name} ${r.team}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.querySelector('#tbl-stuff tbody').innerHTML = rows.map(r=>{
+    const ar=(r.arsenal||[]).slice(0,4).map(a=>`${a.pitch_type} ${a.ps_stuff}`).join(' · ');
+    const stuffCls = r.stuff_plus!=null?(r.stuff_plus>=105?'good':r.stuff_plus<=90?'bad':''):'';
+    return `<tr>
+      <td class="player-name">${r.name}</td><td class="team-cell">${r.team||'—'}</td>
+      <td class="num ${stuffCls}">${r.stuff_plus??'—'}</td><td class="num">${r.pitches??'—'}</td>
+      <td>${r.level_hint||'—'}</td><td>${r.source||'—'}</td>
+      <td class="arsenal">${ar||'—'}</td></tr>`;
+  }).join('');
+}
+function drawSpray(canvas, points){
+  const ctx=canvas.getContext('2d');
+  const w=canvas.width=canvas.clientWidth*2;
+  const h=canvas.height=canvas.clientHeight*2;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='#9ca3af'; ctx.beginPath();
+  ctx.moveTo(w*0.5, h*0.88); ctx.lineTo(w*0.12, h*0.2); ctx.lineTo(w*0.88, h*0.2); ctx.closePath(); ctx.stroke();
+  for(const p of points||[]){
+    const x=(p.x/250)*w, y=h-((p.y/250)*h);
+    ctx.fillStyle='#005A9C';
+    ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2); ctx.fill();
+  }
+}
+function filteredSprayMlb(){
+  const team=document.getElementById('spray-team').value;
+  return (CACHE.spray?.mlb||[]).filter(p=>team==='all' || p.team===team);
+}
+function onSprayTeamChange(){
+  const mlb=filteredSprayMlb();
+  const sel=document.getElementById('spray-player');
+  sel.innerHTML = mlb.map((p,i)=>`<option value="${i}">${p.name}${p.team?' ('+p.team+')':''}</option>`).join('')
+    || '<option value="">No players for this team</option>';
+  renderSpray();
+}
+function renderSpray(){
+  const spray=CACHE.spray||{};
+  document.getElementById('spray-note').textContent = spray.aaa_note || 'AAA true spray splits unavailable.';
+  const mlb=filteredSprayMlb();
+  const sel=document.getElementById('spray-player');
+  if(!sel.dataset.ready){
+    sel.innerHTML = mlb.map((p,i)=>`<option value="${i}">${p.name}${p.team?' ('+p.team+')':''}</option>`).join('')
+      || '<option value="">No MLB sprays yet</option>';
+    sel.dataset.ready='1';
+  }
+  const idx=Number(sel.value||0);
+  const split=document.getElementById('spray-split').value;
+  const grid=document.getElementById('spray-mlb');
+  if(!mlb.length){ grid.innerHTML='<div class="note">No MLB spray data for this team filter.</div>'; }
+  else {
+    const player=mlb[idx]||mlb[0];
+    const s=(player.splits||[]).find(x=>x.split===split) || player.splits?.[0];
+    const f=fpsFor(player.player_id);
+    grid.innerHTML = `<div class="spray-card"><h3>${player.name}${player.team?' · '+player.team:''} · ${s?.split||''} · n=${s?.n||0}</h3>
+      <canvas id="spray-cv"></canvas>
+      <div class="note" style="margin-top:8px">${player.source||''} · FPS% ${pct(f.fps)} · FPS% RISP ${pct(f.fpsRisp)}</div></div>`;
+    requestAnimationFrame(()=>drawSpray(document.getElementById('spray-cv'), s?.points||[]));
+  }
+  const avgs=spray.aaa_averages||{};
+  const team=document.getElementById('spray-team').value;
+  const aaa=(spray.aaa_proxy||[]).filter(r=>team==='all'||r.team===team);
+  document.querySelector('#tbl-aaa-proxy tbody').innerHTML = aaa.map(r=>`<tr>
+    <td class="player-name">${r.name}</td>
+    <td class="team-cell">${r.team||'—'}</td>
+    <td>${r.level_key||'—'}</td>
+    <td class="num ${relClass(r.pull, avgs.pull)}">${r.pull??'—'}</td>
+    <td class="num ${relClass(r.pull_air, avgs.pull_air)}">${r.pull_air??'—'}</td>
+    <td class="num ${relClass(r.oppo_air, avgs.oppo_air)}">${r.oppo_air??'—'}</td>
+    <td style="white-space:normal;max-width:360px">${r.note||''}</td>
+  </tr>`).join('');
+}
+document.getElementById('ideas-grid').innerHTML = IDEAS.map(i=>`<div class="idea"><h3>${i.t}</h3><p>${i.d}</p></div>`).join('');
+
+Promise.all([
+  fetch('data/pregame_lineup_spots.json').then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_pitcher_vs_batter.json').then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_baserunning_bunting.json').then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_opposing_stuff.json').then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_spray_charts.json').then(r=>r.json()).catch(()=>({})),
+  fetch('data/fps_cache.json').then(r=>r.json()).catch(()=>({})),
+]).then(([lineup, matchup, br, stuff, spray, fps])=>{
+  CACHE={lineup, matchup, br, stuff, spray};
+  FPS=fps;
+  document.getElementById('loading').style.display='none';
+  fillLineupSeasons();
+  fillStuffTeams();
+  applyI18n();
+  renderLineup(); renderMatchup(); renderBR(); renderStuff(); renderSpray();
+}).catch(e=>{
+  document.getElementById('loading').textContent='Failed loading pregame data: '+e.message;
+});
+document.addEventListener('licey:lang', () => applyI18n());
+</script>
+</body>
+</html>
