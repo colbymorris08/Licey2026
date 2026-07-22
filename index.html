@@ -113,13 +113,6 @@
           </select>
         </div>
         <div class="filter-field">
-          <label data-i18n="year">Year</label>
-          <select id="f-year" onchange="onFilterChange()">
-            <option value="2026">2026</option>
-            <option value="2025" selected>2025</option>
-          </select>
-        </div>
-        <div class="filter-field">
           <label data-i18n="level">Level</label>
           <select id="f-level" onchange="onFilterChange()">
             <option value="LIDOM" selected>LIDOM</option>
@@ -149,11 +142,12 @@
           <select id="f-time" onchange="onFilterChange()">
             <option value="from_oct_2025" selected>Oct 2025 onwards (optional)</option>
             <option value="2026_season">2026 (whole season)</option>
-            <option value="lidom_season">LIDOM (whole season)</option>
-            <option value="lidom_oct">LIDOM (October)</option>
-            <option value="lidom_nov">LIDOM (November)</option>
-            <option value="lidom_dec">LIDOM (December)</option>
-            <option value="lidom_jan">LIDOM (January)</option>
+            <option value="lidom_2025_season">LIDOM 2025 (whole season)</option>
+            <option value="lidom_2025_oct">LIDOM 2025 (October)</option>
+            <option value="lidom_2025_nov">LIDOM 2025 (November)</option>
+            <option value="lidom_2025_dec">LIDOM 2025 (December)</option>
+            <option value="lidom_2025_jan">LIDOM 2025 (January)</option>
+            <option value="lidom_2026_season">LIDOM 2026 (whole season) — not yet populated</option>
           </select>
         </div>
       </div>
@@ -275,7 +269,6 @@ function toggleStuffView() {
 
 function resetFilters() {
   document.getElementById('f-team').value = 'all';
-  document.getElementById('f-year').value = '2025';
   document.getElementById('f-level').value = 'LIDOM';
   document.getElementById('f-pos').value = 'all';
   document.getElementById('f-time').value = 'from_oct_2025';
@@ -315,7 +308,7 @@ function syncRosterFromStatsTeam() {
 }
 
 function onFilterChange() {
-  // Time range is optional context only — never forces Level or Year.
+  // Time range is optional context only — never forces Level.
   // Clear LIDOM team when viewing MLB/MiLB (team abbrevs are LIDOM-only).
   if (document.getElementById('f-level').value !== 'LIDOM') {
     document.getElementById('f-team').value = 'all';
@@ -327,10 +320,17 @@ function onFilterChange() {
 
 function activeSource() {
   // Level alone chooses the dataset; time range does not override.
+  // LIDOM 2026 is not populated yet — still use 2025 LIDOM rows when Level=LIDOM.
   const level = document.getElementById('f-level').value;
   if (level === 'LIDOM') return 'lidom';
   if (level === 'MLB') return 'mlb';
   return 'milb';
+}
+
+function preferredFpsYear() {
+  const time = document.getElementById('f-time').value;
+  if (time === '2026_season' || time === 'lidom_2026_season') return 2026;
+  return 2025;
 }
 
 function timeRangeLabel() {
@@ -338,11 +338,12 @@ function timeRangeLabel() {
   return {
     from_oct_2025: 'Oct 2025 onwards',
     '2026_season': '2026 whole season',
-    lidom_season: 'LIDOM whole season',
-    lidom_oct: 'LIDOM October',
-    lidom_nov: 'LIDOM November',
-    lidom_dec: 'LIDOM December',
-    lidom_jan: 'LIDOM January',
+    lidom_2025_season: 'LIDOM 2025 whole season',
+    lidom_2025_oct: 'LIDOM 2025 October',
+    lidom_2025_nov: 'LIDOM 2025 November',
+    lidom_2025_dec: 'LIDOM 2025 December',
+    lidom_2025_jan: 'LIDOM 2025 January',
+    lidom_2026_season: 'LIDOM 2026 whole season (not yet populated)',
   }[time] || time;
 }
 
@@ -350,11 +351,17 @@ function updateBanner() {
   const src = activeSource();
   const time = document.getElementById('f-time').value;
   const team = document.getElementById('f-team').value;
-  const year = document.getElementById('f-year').value;
   const tr = timeRangeLabel();
-  const monthNote = { lidom_oct:'October', lidom_nov:'November', lidom_dec:'December', lidom_jan:'January' }[time];
+  const monthNote = {
+    lidom_2025_oct: 'October 2025',
+    lidom_2025_nov: 'November 2025',
+    lidom_2025_dec: 'December 2025',
+    lidom_2025_jan: 'January 2025',
+  }[time];
   let msg = '';
-  if (src === 'lidom') {
+  if (time === 'lidom_2026_season' && src === 'lidom') {
+    msg = `<strong>LIDOM 2026</strong> is not populated yet — showing <strong>2025 LIDOM</strong> as a stand-in. Time range: ${tr}.`;
+  } else if (src === 'lidom') {
     const teamLabel = team === 'all' ? 'all LIDOM teams' : (Object.values(TEAM_META).find(t => t.abbrev === team)?.name || team);
     if (monthNote) {
       msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}) — full-season stand-in for ${monthNote} until winter splits are live. Time range: ${tr}.`;
@@ -364,9 +371,9 @@ function updateBanner() {
       msg = `Showing <strong>2025 LIDOM</strong> (${teamLabel}). Time range: ${tr}.`;
     }
   } else if (src === 'mlb') {
-    msg = `Showing <strong>${year} MLB</strong> stats (2026 data loaded). Time range optional: <strong>${tr}</strong> — does not change Level.`;
+    msg = `Showing <strong>2026 MLB</strong> stats. Time range optional: <strong>${tr}</strong> — does not change Level.`;
   } else {
-    msg = `Showing <strong>${year} MiLB</strong> (AA + AAA) stats (2026 data loaded). Time range optional: <strong>${tr}</strong> — does not change Level.`;
+    msg = `Showing <strong>2026 MiLB</strong> (AA + AAA) stats. Time range optional: <strong>${tr}</strong> — does not change Level.`;
   }
   document.getElementById('data-banner').innerHTML = msg;
 }
@@ -375,8 +382,7 @@ function normalizeHit(s, levelHint) {
   const pa = num(s.plateAppearances);
   const so = num(s.strikeOuts) || 0;
   const bb = num(s.baseOnBalls) || 0;
-  const year = document.getElementById('f-year').value;
-  const fps = fpsFor(s.playerId, year === '2025' ? 2025 : 2026);
+  const fps = fpsFor(s.playerId, preferredFpsYear());
   return {
     id: s.playerId,
     name: s.playerFullName || s.playerName,
