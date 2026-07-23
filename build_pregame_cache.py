@@ -5,6 +5,7 @@ Build Pregame Analytics caches for Tigres del Licey (advance scouting reports).
 Outputs in data/:
   pregame_lineup_spots.json
   pregame_pitcher_vs_batter.json
+  pregame_hitter_vs_pitcher.json
   pregame_baserunning_bunting.json
   pregame_opposing_stuff.json
   pregame_spray_charts.json
@@ -23,6 +24,14 @@ from pathlib import Path
 OUT = Path(__file__).resolve().parent / "data"
 UA = {"User-Agent": "LiceyAnalytics/1.0"}
 LICEY_ID = 672
+TEAM_ABBREV = {
+    667: "AGU",
+    668: "TOR",
+    669: "EST",
+    670: "GIG",
+    671: "ESC",
+    672: "LIC",
+}
 LIDOM_TEAMS = {
     667: "Águilas Cibaeñas",
     668: "Toros del Este",
@@ -141,7 +150,11 @@ def build_lineup_spots(pks: list[int], licey_hitters: dict[int, str]) -> list[di
     return out
 
 
-def build_pitcher_vs_batter(pks: list[int], licey_pitchers: dict[int, str], opp_hitters: dict[int, str]) -> list[dict]:
+def build_pitcher_vs_batter(
+    pks: list[int],
+    licey_pitchers: dict[int, str],
+    opp_hitters: dict[int, dict],
+) -> list[dict]:
     """Licey pitchers vs opposing LIDOM hitters from live feeds."""
     agg = defaultdict(lambda: {"PA": 0, "AB": 0, "H": 0, "doubles": 0, "HR": 0, "BB": 0, "SO": 0, "TB": 0})
     for i, pk in enumerate(pks, 1):
@@ -199,12 +212,100 @@ def build_pitcher_vs_batter(pks: list[int], licey_pitchers: dict[int, str], opp_
     out = []
     for (pid, bid), c in sorted(agg.items(), key=lambda x: -x[1]["PA"]):
         ab = c["AB"]
+        meta = opp_hitters[bid]
         out.append(
             {
                 "pitcher_name": licey_pitchers[pid],
                 "pitcher_id": pid,
-                "hitter_name": opp_hitters[bid],
+                "hitter_name": meta["name"],
                 "hitter_id": bid,
+                "hitter_team": meta.get("team") or "",
+                "hitter_team_name": meta.get("team_name") or "",
+                "PA": c["PA"],
+                "AB": ab,
+                "H": c["H"],
+                "doubles": c["doubles"],
+                "HR": c["HR"],
+                "BB": c["BB"],
+                "SO": c["SO"],
+                "AVG": round(c["H"] / ab, 3) if ab else None,
+                "SLG": round(c["TB"] / ab, 3) if ab else None,
+                "source": "LIDOM 2025 play-by-play",
+            }
+        )
+    return out
+
+
+def build_hitter_vs_pitcher(
+    pks: list[int],
+    licey_hitters: dict[int, str],
+    opp_pitchers: dict[int, dict],
+) -> list[dict]:
+    """Licey hitters vs opposing LIDOM pitchers from live feeds."""
+    agg = defaultdict(lambda: {"PA": 0, "AB": 0, "H": 0, "doubles": 0, "HR": 0, "BB": 0, "SO": 0, "TB": 0})
+    for i, pk in enumerate(pks, 1):
+        try:
+            feed = http_json(f"https://statsapi.mlb.com/api/v1.1/game/{pk}/feed/live")
+        except Exception as exc:  # noqa: BLE001
+            print("feed fail", pk, exc)
+            continue
+        plays = ((feed.get("liveData") or {}).get("plays") or {}).get("allPlays") or []
+        for play in plays:
+            m = play.get("matchup") or {}
+            pit = m.get("pitcher") or {}
+            bat = m.get("batter") or {}
+            pid = pit.get("id")
+            bid = bat.get("id")
+            if not bid or int(bid) not in licey_hitters:
+                continue
+            if not pid or int(pid) not in opp_pitchers:
+                continue
+            result = play.get("result") or {}
+            et = result.get("eventType") or result.get("type") or ""
+            if et in ("stolen_base_2b", "stolen_base_3b", "caught_stealing_2b", "caught_stealing_3b", "pickoff", "balk", "wild_pitch", "passed_ball"):
+                continue
+            row = agg[(int(bid), int(pid))]
+            row["PA"] += 1
+            desc = (result.get("event") or "").lower()
+            if "walk" in desc or et == "walk" or et == "intent_walk":
+                row["BB"] += 1
+            elif "strikeout" in desc or et == "strikeout":
+                row["SO"] += 1
+                row["AB"] += 1
+            elif et in ("hit_by_pitch", "sac_bunt", "sac_fly", "catcher_interf"):
+                pass
+            else:
+                row["AB"] += 1
+                if et == "single":
+                    row["H"] += 1
+                    row["TB"] += 1
+                elif et == "double":
+                    row["H"] += 1
+                    row["doubles"] += 1
+                    row["TB"] += 2
+                elif et == "triple":
+                    row["H"] += 1
+                    row["TB"] += 3
+                elif et == "home_run":
+                    row["H"] += 1
+                    row["HR"] += 1
+                    row["TB"] += 4
+        if i % 15 == 0:
+            print(f"  hvp feeds {i}/{len(pks)}")
+        time.sleep(0.08)
+
+    out = []
+    for (bid, pid), c in sorted(agg.items(), key=lambda x: -x[1]["PA"]):
+        ab = c["AB"]
+        meta = opp_pitchers[pid]
+        out.append(
+            {
+                "hitter_name": licey_hitters[bid],
+                "hitter_id": bid,
+                "pitcher_name": meta["name"],
+                "pitcher_id": pid,
+                "pitcher_team": meta.get("team") or "",
+                "pitcher_team_name": meta.get("team_name") or "",
                 "PA": c["PA"],
                 "AB": ab,
                 "H": c["H"],
@@ -529,13 +630,22 @@ def main() -> None:
     for tid, team in rosters.items():
         if str(tid) == str(LICEY_ID):
             continue
+        abbrev = TEAM_ABBREV.get(int(tid), team.get("teamAbbrev") or "")
         for p in team["players"]:
             if not p.get("id"):
                 continue
             if p.get("position") == "P":
-                opp_pitchers[int(p["id"])] = {"name": p["name"], "team": team["teamName"]}
+                opp_pitchers[int(p["id"])] = {
+                    "name": p["name"],
+                    "team": abbrev,
+                    "team_name": team["teamName"],
+                }
             else:
-                opp_hitters[int(p["id"])] = p["name"]
+                opp_hitters[int(p["id"])] = {
+                    "name": p["name"],
+                    "team": abbrev,
+                    "team_name": team["teamName"],
+                }
 
     all_ids = sorted(set(licey_hitters) | set(licey_pitchers) | set(opp_hitters) | set(opp_pitchers))
     print("fetching people", len(all_ids))
@@ -555,6 +665,11 @@ def main() -> None:
     (OUT / "pregame_pitcher_vs_batter.json").write_text(json.dumps(matchups, indent=2))
     print("matchup rows", len(matchups))
 
+    print("building hitter vs pitcher…")
+    hvp = build_hitter_vs_pitcher(pks, licey_hitters, opp_pitchers)
+    (OUT / "pregame_hitter_vs_pitcher.json").write_text(json.dumps(hvp, indent=2))
+    print("hvp rows", len(hvp))
+
     print("building baserunning/bunting…")
     br = build_baserunning_bunting(hitting, set(opp_hitters), people)
     enrich_aaa_baserunning(br[:80])
@@ -568,7 +683,8 @@ def main() -> None:
 
     print("building spray charts…")
     # Focus spray on opposing LIDOM hitters (advance scouting targets)
-    spray = build_spray_charts(opp_hitters, people)
+    spray_names = {pid: meta["name"] for pid, meta in opp_hitters.items()}
+    spray = build_spray_charts(spray_names, people)
     (OUT / "pregame_spray_charts.json").write_text(json.dumps(spray, indent=2))
     print("mlb sprays", len(spray["mlb"]), "aaa proxies", len(spray["aaa_proxy"]))
 

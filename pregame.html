@@ -41,6 +41,7 @@
   <div class="tab-bar">
     <button class="tab active" data-tab="lineup" onclick="switchTab('lineup')" data-i18n="lineupTab">Lineup Spot Success</button>
     <button class="tab" data-tab="matchup" onclick="switchTab('matchup')" data-i18n="matchupTab">Pitcher vs Batter</button>
+    <button class="tab" data-tab="hvp" onclick="switchTab('hvp')" data-i18n="hvpTab">Hitter vs Pitcher</button>
     <button class="tab" data-tab="br" onclick="switchTab('br')" data-i18n="brTab">Baserunning &amp; Bunting</button>
     <button class="tab" data-tab="stuff" onclick="switchTab('stuff')" data-i18n="stuffTab">Opposing Stuff</button>
     <button class="tab" data-tab="spray" onclick="switchTab('spray')" data-i18n="sprayTab">Spray Charts</button>
@@ -131,6 +132,48 @@
         <th class="num" onclick="sortTbl('tbl-match',10)">SLG</th>
         <th class="num" onclick="sortTbl('tbl-match',11)">FPS%</th>
         <th class="num" onclick="sortTbl('tbl-match',12)">FPS% RISP</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div id="panel-hvp" class="panel">
+    <div class="section-label" data-i18n="hvpLabel">Licey hitters vs opposing LIDOM pitchers</div>
+    <div class="note" data-i18n-html="hvpNote">Built from LIDOM 2025 live play-by-play. Filter by opposing pitcher’s LIDOM team. FPS% / FPS% RISP from MLB Statcast on the Licey hitter (red = above pool avg, blue = below).</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="hvp-search" placeholder="Hitter or pitcher" oninput="renderHvp()"></div>
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="hvp-team" onchange="renderHvp()">
+          <option value="all">All Teams</option>
+          <option value="AGU">Águilas Cibaeñas</option>
+          <option value="TOR">Toros del Este</option>
+          <option value="EST">Estrellas Orientales</option>
+          <option value="GIG">Gigantes del Cibao</option>
+          <option value="ESC">Leones del Escogido</option>
+        </select>
+      </div>
+      <div class="filter-field"><label data-i18n="minPA">Min PA</label>
+        <select id="hvp-minpa" onchange="renderHvp()">
+          <option value="3">Min 3 PA</option>
+          <option value="1">Min 1 PA</option>
+          <option value="5">Min 5 PA</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-hvp"><thead><tr>
+        <th onclick="sortTbl('tbl-hvp',0)">Hitter</th>
+        <th onclick="sortTbl('tbl-hvp',1)">Pitcher</th>
+        <th onclick="sortTbl('tbl-hvp',2)">Team</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',3)">PA</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',4)">AB</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',5)">H</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',6)">HR</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',7)">BB</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',8)">SO</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',9)">AVG</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',10)">SLG</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',11)">FPS%</th>
+        <th class="num" onclick="sortTbl('tbl-hvp',12)">FPS% RISP</th>
       </tr></thead><tbody></tbody></table>
     </div>
   </div>
@@ -317,7 +360,7 @@
 <script>
 let CACHE = {}, FPS = {}, sortState = {}, FPS_AVG = { fps: 0.28, fpsRisp: 0.28 };
 const pct = v => v == null ? '—' : (v*100).toFixed(1)+'%';
-const ASSET_V = 'spray1';
+const ASSET_V = 'hvp1';
 
 function fpsFor(pid) {
   const row = FPS[String(pid)];
@@ -714,6 +757,29 @@ function renderMatchup(){
   </tr>`;
   }).join('');
 }
+function renderHvp(){
+  const q=(document.getElementById('hvp-search').value||'').toLowerCase();
+  const team=document.getElementById('hvp-team').value;
+  const minPA=Number(document.getElementById('hvp-minpa').value||3);
+  const rows=(CACHE.hvp||[]).filter(r=>{
+    if(r.PA<minPA) return false;
+    if(team!=='all' && r.pitcher_team!==team) return false;
+    if(q && !`${r.hitter_name} ${r.pitcher_name}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.querySelector('#tbl-hvp tbody').innerHTML = rows.map(r=>{
+    const f=fpsFor(r.hitter_id);
+    return `<tr>
+    <td class="player-name">${r.hitter_name}</td><td>${r.pitcher_name}</td>
+    <td class="team-cell">${r.pitcher_team||'—'}</td>
+    <td class="num">${r.PA}</td><td class="num">${r.AB}</td><td class="num">${r.H}</td>
+    <td class="num">${r.HR}</td><td class="num">${r.BB}</td><td class="num">${r.SO}</td>
+    <td class="num">${r.AVG??'—'}</td><td class="num">${r.SLG??'—'}</td>
+    <td class="num ${fpsClass(f.fps, FPS_AVG.fps)}">${pct(f.fps)}</td>
+    <td class="num ${fpsClass(f.fpsRisp, FPS_AVG.fpsRisp)}">${pct(f.fpsRisp)}</td>
+  </tr>`;
+  }).join('');
+}
 function renderBR(){
   const q=(document.getElementById('br-search').value||'').toLowerCase();
   const team=document.getElementById('br-team').value;
@@ -947,13 +1013,14 @@ function renderSpray(){
 Promise.all([
   fetch('data/pregame_lineup_spots.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
   fetch('data/pregame_pitcher_vs_batter.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_hitter_vs_pitcher.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
   fetch('data/pregame_baserunning_bunting.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
   fetch('data/pregame_opposing_stuff.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
   fetch('data/pregame_spray_charts.json?v='+ASSET_V).then(r=>r.json()).catch(()=>({})),
   fetch('data/fps_cache.json?v='+ASSET_V).then(r=>r.json()).catch(()=>({})),
   fetch('data/pregame_pitcher_arsenals.json?v='+ASSET_V).then(r=>r.json()).catch(()=>({pitchers:[]})),
-]).then(([lineup, matchup, br, stuff, spray, fps, arsenals])=>{
-  CACHE={lineup, matchup, br, stuff, spray, arsenals};
+]).then(([lineup, matchup, hvp, br, stuff, spray, fps, arsenals])=>{
+  CACHE={lineup, matchup, hvp, br, stuff, spray, arsenals};
   FPS=fps;
   computeFpsAvgs();
   document.getElementById('loading').style.display='none';
@@ -964,7 +1031,7 @@ Promise.all([
   syncPovSelects();
   applyI18n();
   syncPovSelects();
-  renderLineup(); renderMatchup(); renderBR(); renderStuff(); renderSpray();
+  renderLineup(); renderMatchup(); renderHvp(); renderBR(); renderStuff(); renderSpray();
   renderUsage(); renderPlatoon(); renderTunnel();
 }).catch(e=>{
   document.getElementById('loading').textContent='Failed loading pregame data: '+e.message;

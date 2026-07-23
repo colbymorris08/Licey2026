@@ -305,7 +305,13 @@ function resetFilters() {
 }
 
 function onTeamChange() {
-  // Team abbrevs are LIDOM-only filters; do not force Level away from All.
+  const team = document.getElementById('f-team').value;
+  // LIDOM team filter scopes to that club’s LIDOM rows.
+  if (team !== 'all') {
+    document.getElementById('f-level').value = 'LIDOM';
+    const year = document.getElementById('f-year').value;
+    if (year === '2026') document.getElementById('f-year').value = '2025';
+  }
   syncRosterFromStatsTeam();
   updateBanner();
   renderTable();
@@ -524,13 +530,9 @@ function applyFilters(rows) {
   const team = document.getElementById('f-team').value;
   const pos = document.getElementById('f-pos').value;
   return rows.filter(r => {
-    // LIDOM team dropdown only filters LIDOM rows; other levels stay when Level=All
+    // When a LIDOM team is selected, only that team's players (hide other levels/teams).
     if (team !== 'all') {
-      if (r.level === 'LIDOM') {
-        if (r.team !== team) return false;
-      } else if (document.getElementById('f-level').value === 'LIDOM') {
-        return false;
-      }
+      if ((r.team || '') !== team) return false;
     }
     if (pos !== 'all') {
       if (pos === 'OF') {
