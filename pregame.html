@@ -313,11 +313,11 @@
     </div>
   </div>
 </main>
-<script src="i18n.js?v=pov3"></script>
+<script src="i18n.js?v=pov4"></script>
 <script>
 let CACHE = {}, FPS = {}, sortState = {}, FPS_AVG = { fps: 0.28, fpsRisp: 0.28 };
 const pct = v => v == null ? '—' : (v*100).toFixed(1)+'%';
-const ASSET_V = 'pov3';
+const ASSET_V = 'pov4';
 
 function fpsFor(pid) {
   const row = FPS[String(pid)];
@@ -423,7 +423,7 @@ function getArsenalPitcher(selId) {
   const id=Number(document.getElementById(selId)?.value||0);
   return arsenalPitchers().find(r=>Number(r.player_id)===id) || null;
 }
-/** Pitcher-view HB: RHP arm-side +, glove −; LHP inverted on same axis. Hitter = negate. */
+/** Pitcher-view HB number: RHP arm-side +, glove − (inverse for LHP). */
 let MOVEMENT_POV = localStorage.getItem('licey_movement_pov') === 'hitter' ? 'hitter' : 'pitcher';
 function syncPovSelects() {
   document.querySelectorAll('.pov-toggle button[data-pov]').forEach(btn=>{
@@ -432,8 +432,8 @@ function syncPovSelects() {
     if (typeof t === 'function') btn.textContent = t(key);
   });
   const hint = MOVEMENT_POV === 'hitter'
-    ? 'Active: Hitter POV — HB is inverted from pitcher (RHP arm-side shows −).'
-    : 'Active: Pitcher POV — RHP arm-side HB +, glove − (inverse for LHP).';
+    ? 'Active: Hitter POV — HB inverted; RHP arm-side appears viewer-left.'
+    : 'Active: Pitcher POV — RHP arm-side HB + (viewer-right); glove − (inverse for LHP).';
   ['usage-pov-hint','platoon-pov-hint','tunnel-pov-hint'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.textContent = hint;
@@ -450,10 +450,20 @@ function pitcherHb(p) {
   if (p.hb_hitter != null && Number.isFinite(Number(p.hb_hitter))) return -Number(p.hb_hitter);
   return null;
 }
+/** Signed HB for tables/labels in the active POV. */
 function hbForPov(p, view=MOVEMENT_POV) {
   const hb = pitcherHb(p);
   if (hb == null) return null;
   return view === 'hitter' ? -hb : hb;
+}
+/**
+ * Plot X placement (KNCT-style): positive pitcher-HB (RHP arm-side) sits viewer-RIGHT.
+ * Plot uses negated pitcher-HB; hitter POV flips that.
+ */
+function plotHb(p, view=MOVEMENT_POV) {
+  const hb = pitcherHb(p);
+  if (hb == null) return null;
+  return view === 'pitcher' ? -hb : hb;
 }
 function povLabel() {
   if (typeof t === 'function') {
@@ -465,9 +475,10 @@ function povLabel() {
 }
 function movementSvg(pitches, {tunnel=false, view=MOVEMENT_POV}={}) {
   const pts=(pitches||[]).map(p=>{
-    const hb=hbForPov(p, view);
-    if(hb==null || p.ivb==null) return null;
-    return { type:p.type, x:hb, z:Number(p.ivb), color:PITCH_COLORS[p.type]||'#94a3b8', hb };
+    const place=plotHb(p, view);
+    const label=hbForPov(p, view);
+    if(place==null || p.ivb==null) return null;
+    return { type:p.type, x:place, z:Number(p.ivb), color:PITCH_COLORS[p.type]||'#94a3b8', hb:label };
   }).filter(Boolean);
   const W=320,H=340,P=28,pW=W-P*2,pH=H-P*2-16,R=22;
   const cx=v=>P+((-v+R)/(R*2))*pW;
@@ -480,7 +491,9 @@ function movementSvg(pitches, {tunnel=false, view=MOVEMENT_POV}={}) {
     const lx=cx(v), ly=cy(v), c=v===0?'#3a3a5c':'#1c1c2c', w=v===0?1:0.5;
     s+=`<line x1="${lx}" y1="${P}" x2="${lx}" y2="${P+pH}" stroke="${c}" stroke-width="${w}"/>`;
     s+=`<line x1="${P}" y1="${ly}" x2="${P+pW}" y2="${ly}" stroke="${c}" stroke-width="${w}"/>`;
-    s+=`<text x="${lx}" y="${P+pH+12}" text-anchor="middle" font-size="7.5" fill="#94a3b8" font-family="IBM Plex Mono,monospace">${v}</text>`;
+    // Axis tick labels follow POV-signed HB (pitcher: arm-side + on viewer-right)
+    const tickLabel = view === 'pitcher' ? -v : v;
+    s+=`<text x="${lx}" y="${P+pH+12}" text-anchor="middle" font-size="7.5" fill="#94a3b8" font-family="IBM Plex Mono,monospace">${tickLabel}</text>`;
     s+=`<text x="${P-5}" y="${ly+3}" text-anchor="end" font-size="7.5" fill="#94a3b8" font-family="IBM Plex Mono,monospace">${v}</text>`;
   }
   if(tunnel){
