@@ -156,7 +156,19 @@ tbody tr:hover { background: #f8fafc; }
 .idea { border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: #fff; }
 .idea h3 { font-size: 13px; color: var(--navy); margin-bottom: 6px; }
 .idea p { font-size: 13px; color: var(--muted); line-height: 1.5; }
-.arsenal { font-size: 12px; color: var(--muted); }
+.pov-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin: 0 0 12px; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 8px; background: #f8fafc;
+}
+.pov-bar strong { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pov-toggle { display: inline-flex; border: 1px solid var(--navy); border-radius: 8px; overflow: hidden; }
+.pov-toggle button {
+  border: none; background: #fff; color: var(--navy); font: inherit; font-size: 13px; font-weight: 700;
+  padding: 8px 14px; cursor: pointer;
+}
+.pov-toggle button.active { background: var(--navy); color: #fff; }
+.pov-bar .pov-hint { font-size: 12px; color: var(--muted); line-height: 1.4; flex: 1; min-width: 200px; }
 .arsenal-layout {
   display: grid;
   grid-template-columns: minmax(280px, 340px) 1fr;

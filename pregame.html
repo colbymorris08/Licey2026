@@ -234,7 +234,15 @@
   </div>
   <div id="panel-usage" class="panel">
     <div class="section-label" data-i18n="usageLabel">Opposing pitchers — pitch usage</div>
-    <div class="note" data-i18n="usageNote">KNCT-style arsenal movement. Default = Pitcher perspective (RHP arm-side HB +, glove −; inverse for LHP). Hitter perspective flips HB. Overall mix from Prospect Savant; count buckets from MLB Statcast when tracked.</div>
+    <div class="note" data-i18n="usageNote">KNCT-style arsenal movement. Pitcher perspective: RHP arm-side HB +, glove − (inverse for LHP). Hitter perspective = invert HB.</div>
+    <div class="pov-bar" data-pov-bar>
+      <strong data-i18n="povLabel">Perspective</strong>
+      <div class="pov-toggle" role="group" aria-label="Movement perspective">
+        <button type="button" data-pov="pitcher" onclick="setMovementPov('pitcher')">Pitcher perspective</button>
+        <button type="button" data-pov="hitter" onclick="setMovementPov('hitter')">Hitter perspective (invert HB)</button>
+      </div>
+      <div class="pov-hint" id="usage-pov-hint"></div>
+    </div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="usage-search" placeholder="Pitcher / team" oninput="fillArsenalSelects('usage')"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -243,18 +251,20 @@
         </select>
       </div>
       <div class="filter-field"><label data-i18n="player">Pitcher</label><select id="usage-player" onchange="renderUsage()"></select></div>
-      <div class="filter-field"><label data-i18n="povLabel">Perspective</label>
-        <select id="usage-pov" onchange="setMovementPov(this.value)">
-          <option value="pitcher" selected data-i18n="povPitcher">Pitcher perspective</option>
-          <option value="hitter" data-i18n="povHitter">Hitter perspective (invert HB)</option>
-        </select>
-      </div>
     </div>
     <div id="usage-view"></div>
   </div>
   <div id="panel-platoon" class="panel">
     <div class="section-label" data-i18n="platoonLabel">Opposing pitchers — platoon shape</div>
-    <div class="note" data-i18n="platoonNote">Arsenal IVB/HB vs RHB and vs LHB from MLB Statcast when tracked. Use Perspective to toggle Pitcher vs Hitter (HB inverted) view.</div>
+    <div class="note" data-i18n="platoonNote">Arsenal IVB/HB vs RHB and vs LHB from MLB Statcast when tracked. Perspective toggles Pitcher vs Hitter (HB inverted).</div>
+    <div class="pov-bar" data-pov-bar>
+      <strong data-i18n="povLabel">Perspective</strong>
+      <div class="pov-toggle" role="group" aria-label="Movement perspective">
+        <button type="button" data-pov="pitcher" onclick="setMovementPov('pitcher')">Pitcher perspective</button>
+        <button type="button" data-pov="hitter" onclick="setMovementPov('hitter')">Hitter perspective (invert HB)</button>
+      </div>
+      <div class="pov-hint" id="platoon-pov-hint"></div>
+    </div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="platoon-search" placeholder="Pitcher / team" oninput="fillArsenalSelects('platoon')"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -263,12 +273,6 @@
         </select>
       </div>
       <div class="filter-field"><label data-i18n="player">Pitcher</label><select id="platoon-player" onchange="renderPlatoon()"></select></div>
-      <div class="filter-field"><label data-i18n="povLabel">Perspective</label>
-        <select id="platoon-pov" onchange="setMovementPov(this.value)">
-          <option value="pitcher" selected data-i18n="povPitcher">Pitcher perspective</option>
-          <option value="hitter" data-i18n="povHitter">Hitter perspective (invert HB)</option>
-        </select>
-      </div>
     </div>
     <div id="platoon-view"></div>
   </div>
@@ -281,7 +285,15 @@
   </div>
   <div id="panel-tunnel" class="panel">
     <div class="section-label" data-i18n="tunnelLabel">Opposing pitchers — pitch tunneling / shape</div>
-    <div class="note" data-i18n="tunnelNote">KNCT-style arsenal plot with tunnel rays. Pitcher perspective = RHP arm-side HB +, glove − (inverse for LHP). Hitter perspective = invert of pitcher HB.</div>
+    <div class="note" data-i18n="tunnelNote">Tunnel rays on the arsenal plot. Pitcher perspective: RHP arm-side HB +, glove − (inverse for LHP). Hitter = invert HB.</div>
+    <div class="pov-bar" data-pov-bar>
+      <strong data-i18n="povLabel">Perspective</strong>
+      <div class="pov-toggle" role="group" aria-label="Movement perspective">
+        <button type="button" data-pov="pitcher" onclick="setMovementPov('pitcher')">Pitcher perspective</button>
+        <button type="button" data-pov="hitter" onclick="setMovementPov('hitter')">Hitter perspective (invert HB)</button>
+      </div>
+      <div class="pov-hint" id="tunnel-pov-hint"></div>
+    </div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="tunnel-search" placeholder="Pitcher / team" oninput="fillArsenalSelects('tunnel')"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -290,12 +302,6 @@
         </select>
       </div>
       <div class="filter-field"><label data-i18n="player">Pitcher</label><select id="tunnel-player" onchange="renderTunnel()"></select></div>
-      <div class="filter-field"><label data-i18n="povLabel">Perspective</label>
-        <select id="tunnel-pov" onchange="setMovementPov(this.value)">
-          <option value="pitcher" selected data-i18n="povPitcher">Pitcher perspective</option>
-          <option value="hitter" data-i18n="povHitter">Hitter perspective (invert HB)</option>
-        </select>
-      </div>
     </div>
     <div id="tunnel-view"></div>
   </div>
@@ -307,10 +313,11 @@
     </div>
   </div>
 </main>
-<script src="i18n.js"></script>
+<script src="i18n.js?v=pov3"></script>
 <script>
 let CACHE = {}, FPS = {}, sortState = {}, FPS_AVG = { fps: 0.28, fpsRisp: 0.28 };
 const pct = v => v == null ? '—' : (v*100).toFixed(1)+'%';
+const ASSET_V = 'pov3';
 
 function fpsFor(pid) {
   const row = FPS[String(pid)];
@@ -416,12 +423,20 @@ function getArsenalPitcher(selId) {
   const id=Number(document.getElementById(selId)?.value||0);
   return arsenalPitchers().find(r=>Number(r.player_id)===id) || null;
 }
-/** Pitcher-view HB: RHP arm-side +, glove −; LHP inverted (same field). Hitter = negate. */
+/** Pitcher-view HB: RHP arm-side +, glove −; LHP inverted on same axis. Hitter = negate. */
 let MOVEMENT_POV = localStorage.getItem('licey_movement_pov') === 'hitter' ? 'hitter' : 'pitcher';
 function syncPovSelects() {
-  ['usage-pov','platoon-pov','tunnel-pov'].forEach(id=>{
-    const sel=document.getElementById(id);
-    if(sel) sel.value = MOVEMENT_POV;
+  document.querySelectorAll('.pov-toggle button[data-pov]').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.pov === MOVEMENT_POV);
+    const key = btn.dataset.pov === 'hitter' ? 'povHitter' : 'povPitcher';
+    if (typeof t === 'function') btn.textContent = t(key);
+  });
+  const hint = MOVEMENT_POV === 'hitter'
+    ? 'Active: Hitter POV — HB is inverted from pitcher (RHP arm-side shows −).'
+    : 'Active: Pitcher POV — RHP arm-side HB +, glove − (inverse for LHP).';
+  ['usage-pov-hint','platoon-pov-hint','tunnel-pov-hint'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent = hint;
   });
 }
 function setMovementPov(v) {
@@ -432,7 +447,6 @@ function setMovementPov(v) {
 }
 function pitcherHb(p) {
   if (p.hb_pitcher != null && Number.isFinite(Number(p.hb_pitcher))) return Number(p.hb_pitcher);
-  // Legacy: hb_hitter was catcher-facing (= − pitcher-view)
   if (p.hb_hitter != null && Number.isFinite(Number(p.hb_hitter))) return -Number(p.hb_hitter);
   return null;
 }
@@ -453,14 +467,15 @@ function movementSvg(pitches, {tunnel=false, view=MOVEMENT_POV}={}) {
   const pts=(pitches||[]).map(p=>{
     const hb=hbForPov(p, view);
     if(hb==null || p.ivb==null) return null;
-    return { type:p.type, x:hb, z:Number(p.ivb), color:PITCH_COLORS[p.type]||'#94a3b8' };
+    return { type:p.type, x:hb, z:Number(p.ivb), color:PITCH_COLORS[p.type]||'#94a3b8', hb };
   }).filter(Boolean);
-  const W=320,H=320,P=28,pW=W-P*2,pH=H-P*2,R=22;
+  const W=320,H=340,P=28,pW=W-P*2,pH=H-P*2-16,R=22;
   const cx=v=>P+((-v+R)/(R*2))*pW;
   const cy=v=>P+((-v+R)/(R*2))*pH;
-  const axis = view === 'hitter' ? 'HB hitter (in) →' : 'HB pitcher (in) →';
+  const axis = view === 'hitter' ? 'HB hitter POV (in) →' : 'HB pitcher POV (in) →';
   let s=`<svg class="plot" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
   s+=`<rect width="${W}" height="${H}" fill="#14141f" rx="6"/>`;
+  s+=`<text x="${W/2}" y="16" text-anchor="middle" font-size="10" fill="#f8fafc" font-family="IBM Plex Mono,monospace" font-weight="700">${view === 'hitter' ? 'HITTER POV' : 'PITCHER POV'}</text>`;
   for(let v=-20;v<=20;v+=5){
     const lx=cx(v), ly=cy(v), c=v===0?'#3a3a5c':'#1c1c2c', w=v===0?1:0.5;
     s+=`<line x1="${lx}" y1="${P}" x2="${lx}" y2="${P+pH}" stroke="${c}" stroke-width="${w}"/>`;
@@ -478,9 +493,9 @@ function movementSvg(pitches, {tunnel=false, view=MOVEMENT_POV}={}) {
     const anc=p.x<0?'start':'end';
     const lx2=px+(p.x<0?10:-10);
     s+=`<circle cx="${px}" cy="${pz}" r="7" fill="${p.color}" opacity=".92" stroke="#0f172a" stroke-width="1.5"/>`;
-    s+=`<text x="${lx2}" y="${pz+3}" font-size="8.5" fill="${p.color}" font-family="IBM Plex Mono,monospace" font-weight="700" text-anchor="${anc}">${p.type}</text>`;
+    s+=`<text x="${lx2}" y="${pz+3}" font-size="8.5" fill="${p.color}" font-family="IBM Plex Mono,monospace" font-weight="700" text-anchor="${anc}">${p.type} ${p.hb>=0?'+':''}${p.hb.toFixed(1)}</text>`;
   });
-  s+=`<text x="${P+pW/2}" y="${H-3}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace">${axis}</text>`;
+  s+=`<text x="${P+pW/2}" y="${H-6}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace">${axis}</text>`;
   s+=`<text x="9" y="${P+pH/2}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace" transform="rotate(-90 9 ${P+pH/2})">↑ IVB (in)</text>`;
   return s+'</svg>';
 }
@@ -790,13 +805,13 @@ function renderSpray(){
 }
 
 Promise.all([
-  fetch('data/pregame_lineup_spots.json').then(r=>r.json()).catch(()=>[]),
-  fetch('data/pregame_pitcher_vs_batter.json').then(r=>r.json()).catch(()=>[]),
-  fetch('data/pregame_baserunning_bunting.json').then(r=>r.json()).catch(()=>[]),
-  fetch('data/pregame_opposing_stuff.json').then(r=>r.json()).catch(()=>[]),
-  fetch('data/pregame_spray_charts.json').then(r=>r.json()).catch(()=>({})),
-  fetch('data/fps_cache.json').then(r=>r.json()).catch(()=>({})),
-  fetch('data/pregame_pitcher_arsenals.json').then(r=>r.json()).catch(()=>({pitchers:[]})),
+  fetch('data/pregame_lineup_spots.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_pitcher_vs_batter.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_baserunning_bunting.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_opposing_stuff.json?v='+ASSET_V).then(r=>r.json()).catch(()=>[]),
+  fetch('data/pregame_spray_charts.json?v='+ASSET_V).then(r=>r.json()).catch(()=>({})),
+  fetch('data/fps_cache.json?v='+ASSET_V).then(r=>r.json()).catch(()=>({})),
+  fetch('data/pregame_pitcher_arsenals.json?v='+ASSET_V).then(r=>r.json()).catch(()=>({pitchers:[]})),
 ]).then(([lineup, matchup, br, stuff, spray, fps, arsenals])=>{
   CACHE={lineup, matchup, br, stuff, spray, arsenals};
   FPS=fps;
@@ -808,6 +823,7 @@ Promise.all([
   fillArsenalSelects();
   syncPovSelects();
   applyI18n();
+  syncPovSelects();
   renderLineup(); renderMatchup(); renderBR(); renderStuff(); renderSpray();
   renderUsage(); renderPlatoon(); renderTunnel();
 }).catch(e=>{
@@ -815,6 +831,7 @@ Promise.all([
 });
 document.addEventListener('licey:lang', () => {
   applyI18n();
+  syncPovSelects();
   renderUsage(); renderPlatoon(); renderTunnel();
 });
 </script>
