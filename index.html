@@ -124,6 +124,14 @@
           </select>
         </div>
         <div class="filter-field">
+          <label data-i18n="year">Year</label>
+          <select id="f-year" onchange="onYearChange()">
+            <option value="all" selected>All</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
+        </div>
+        <div class="filter-field">
           <label data-i18n="positions">Positions</label>
           <select id="f-pos" onchange="renderTable()">
             <option value="all" data-i18n="allPositions">All Positions</option>
@@ -287,6 +295,7 @@ function toggleStuffView() {
 function resetFilters() {
   document.getElementById('f-team').value = 'all';
   document.getElementById('f-level').value = 'all';
+  document.getElementById('f-year').value = 'all';
   document.getElementById('f-pos').value = 'all';
   document.getElementById('f-time').value = 'from_oct_2025';
   stuffView = false;
@@ -296,11 +305,7 @@ function resetFilters() {
 }
 
 function onTeamChange() {
-  const team = document.getElementById('f-team').value;
-  // Selecting a LIDOM team scopes Level to LIDOM (team abbrevs are LIDOM-only)
-  if (team !== 'all') {
-    document.getElementById('f-level').value = 'LIDOM';
-  }
+  // Team abbrevs are LIDOM-only filters; do not force Level away from All.
   syncRosterFromStatsTeam();
   updateBanner();
   renderTable();
@@ -324,8 +329,31 @@ function syncRosterFromStatsTeam() {
   sel.value = ab === 'all' ? 'all' : (ABBREV_TO_ID[ab] || 'all');
 }
 
+function onYearChange() {
+  const year = document.getElementById('f-year').value;
+  // Selecting 2026 must surface MLB / MiLB (and Mexico) — leave Level=All if it was LIDOM-only.
+  if (year === '2026') {
+    const lvl = document.getElementById('f-level').value;
+    if (lvl === 'LIDOM') document.getElementById('f-level').value = 'all';
+    document.getElementById('f-time').value = '2026_season';
+  } else if (year === '2025') {
+    document.getElementById('f-time').value = 'lidom_2025_season';
+  }
+  onFilterChange();
+}
+
 function onFilterChange() {
-  // Time range is optional context only — never forces Level.
+  // Sync Year from Time Range when user picks an explicit season bucket.
+  const time = document.getElementById('f-time').value;
+  const yearSel = document.getElementById('f-year');
+  if (time === '2026_season' || time === 'lidom_2026_season') {
+    yearSel.value = '2026';
+    if (document.getElementById('f-level').value === 'LIDOM') {
+      document.getElementById('f-level').value = 'all';
+    }
+  } else if (time.startsWith('lidom_2025')) {
+    yearSel.value = '2025';
+  }
   // Clear LIDOM team unless Level is LIDOM (or All with team still only filters LIDOM rows).
   const level = document.getElementById('f-level').value;
   if (level !== 'LIDOM' && level !== 'all') {
@@ -347,7 +375,14 @@ function selectedLevels() {
   return ['LIDOM', 'MEX', 'MiLB', 'MLB'];
 }
 
+function selectedYear() {
+  return document.getElementById('f-year')?.value || 'all';
+}
+
 function preferredFpsYear() {
+  const year = selectedYear();
+  if (year === '2026') return 2026;
+  if (year === '2025') return 2025;
   const time = document.getElementById('f-time').value;
   if (time === '2026_season' || time === 'lidom_2026_season') return 2026;
   return 2025;
@@ -369,21 +404,28 @@ function timeRangeLabel() {
 
 function updateBanner() {
   const levels = selectedLevels();
+  const year = selectedYear();
   const time = document.getElementById('f-time').value;
   const team = document.getElementById('f-team').value;
   const tr = timeRangeLabel();
   const label = document.getElementById('f-level').selectedOptions[0]?.textContent || levels.join(' / ');
-  let msg = `Level: <strong>${label}</strong> · Time range optional: <strong>${tr}</strong>.`;
-  if (levels.includes('LIDOM')) {
+  let msg = `Level: <strong>${label}</strong> · Year: <strong>${year === 'all' ? 'All' : year}</strong> · Time: <strong>${tr}</strong>.`;
+  const wantLidom = levels.includes('LIDOM') && year !== '2026';
+  const wantMex = levels.includes('MEX') && year !== '2025';
+  const wantMlb = (levels.includes('MLB') || levels.includes('MiLB')) && year !== '2025';
+  if (wantLidom) {
     const teamLabel = team === 'all' ? 'all LIDOM teams' : (Object.values(TEAM_META).find(t => t.abbrev === team)?.name || team);
     if (time === 'lidom_2026_season') {
       msg += ` LIDOM 2026 not populated yet — using <strong>2025 LIDOM</strong> (${teamLabel}) as stand-in.`;
     } else {
-      msg += ` LIDOM block = <strong>2025 LIDOM</strong> (${teamLabel}).`;
+      msg += ` LIDOM = <strong>2025</strong> (${teamLabel}).`;
     }
   }
-  if (levels.includes('MEX')) msg += ` Mexico = <strong>2026 Liga Mexicana</strong>.`;
-  if (levels.includes('MLB') || levels.includes('MiLB')) msg += ` MLB/MiLB = <strong>2026</strong> season.`;
+  if (wantMex) msg += ` Mexico = <strong>2026 Liga Mexicana</strong>.`;
+  if (wantMlb) msg += ` MLB/MiLB = <strong>2026</strong> season.`;
+  if (year === '2026' && levels.includes('LIDOM') && !wantLidom) {
+    msg += ` LIDOM omitted for Year 2026 (winter 2026 not populated).`;
+  }
   document.getElementById('data-banner').innerHTML = msg;
 }
 
@@ -392,13 +434,15 @@ function normalizeHit(s, levelHint) {
   const so = num(s.strikeOuts) || 0;
   const bb = num(s.baseOnBalls) || 0;
   const fps = fpsFor(s.playerId, preferredFpsYear());
+  const lvl = s._level || levelHint || '';
   return {
     id: s.playerId,
     name: s.playerFullName || s.playerName,
     team: s.teamAbbrev,
     teamId: s.teamId,
     pos: s.positionAbbrev || s.primaryPositionAbbrev || '',
-    level: s._level || levelHint || '',
+    level: lvl === 'AAA' || lvl === 'AA' ? lvl : (lvl || levelHint || ''),
+    year: String(s.year || s.season || ''),
     g: num(s.gamesPlayed),
     pa, ab: num(s.atBats), r: num(s.runs), h: num(s.hits),
     doubles: num(s.doubles), triples: num(s.triples), hr: num(s.homeRuns), rbi: num(s.rbi),
@@ -418,13 +462,15 @@ function normalizePit(s, levelHint) {
   const bb = num(s.baseOnBalls) || 0;
   const pid = s.playerId;
   const st = DATA.stuff[String(pid)];
+  const lvl = s._level || levelHint || '';
   return {
     id: pid,
     name: s.playerFullName || s.playerName,
     team: s.teamAbbrev,
     teamId: s.teamId,
     pos: 'P',
-    level: s._level || levelHint || '',
+    level: lvl === 'AAA' || lvl === 'AA' ? lvl : (lvl || levelHint || ''),
+    year: String(s.year || s.season || ''),
     g: num(s.gamesPitched) || num(s.gamesPlayed),
     gs: num(s.gamesStarted),
     ip: s.inningsPitched,
@@ -446,17 +492,19 @@ function normalizePit(s, levelHint) {
 
 function currentPool() {
   const levels = selectedLevels();
+  const year = selectedYear();
   const out = [];
+  const want = (bucketYear) => year === 'all' || year === bucketYear;
   if (mode === 'hitting') {
-    if (levels.includes('LIDOM')) out.push(...DATA.lidomH.map(r => normalizeHit(r, 'LIDOM')));
-    if (levels.includes('MEX')) out.push(...DATA.mexH.map(r => normalizeHit(r, 'MEX')));
-    if (levels.includes('MLB')) out.push(...DATA.mlbH.map(r => normalizeHit(r, 'MLB')));
-    if (levels.includes('MiLB')) out.push(...DATA.milbH.map(r => normalizeHit(r, r._level || 'MiLB')));
+    if (levels.includes('LIDOM') && want('2025')) out.push(...DATA.lidomH.map(r => normalizeHit(r, 'LIDOM')));
+    if (levels.includes('MEX') && want('2026')) out.push(...DATA.mexH.map(r => normalizeHit(r, 'MEX')));
+    if (levels.includes('MLB') && want('2026')) out.push(...DATA.mlbH.map(r => normalizeHit(r, 'MLB')));
+    if (levels.includes('MiLB') && want('2026')) out.push(...DATA.milbH.map(r => normalizeHit(r, r._level || 'MiLB')));
   } else {
-    if (levels.includes('LIDOM')) out.push(...DATA.lidomP.map(r => normalizePit(r, 'LIDOM')));
-    if (levels.includes('MEX')) out.push(...DATA.mexP.map(r => normalizePit(r, 'MEX')));
-    if (levels.includes('MLB')) out.push(...DATA.mlbP.map(r => normalizePit(r, 'MLB')));
-    if (levels.includes('MiLB')) out.push(...DATA.milbP.map(r => normalizePit(r, r._level || 'MiLB')));
+    if (levels.includes('LIDOM') && want('2025')) out.push(...DATA.lidomP.map(r => normalizePit(r, 'LIDOM')));
+    if (levels.includes('MEX') && want('2026')) out.push(...DATA.mexP.map(r => normalizePit(r, 'MEX')));
+    if (levels.includes('MLB') && want('2026')) out.push(...DATA.mlbP.map(r => normalizePit(r, 'MLB')));
+    if (levels.includes('MiLB') && want('2026')) out.push(...DATA.milbP.map(r => normalizePit(r, r._level || 'MiLB')));
   }
   return out;
 }
