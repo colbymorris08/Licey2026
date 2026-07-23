@@ -268,8 +268,8 @@
     </div>
   </div>
   <div id="panel-tunnel" class="panel">
-    <div class="section-label" data-i18n="tunnelLabel">Opposing pitchers — pitch tunneling / shape (hitter view)</div>
-    <div class="note" data-i18n="tunnelNote">Same KNCT arsenal movement plot from the hitter’s perspective — IVB vs HB with tunnel rays from release center. Pair distances for primary fastball vs offspeed.</div>
+    <div class="section-label" data-i18n="tunnelLabel">Opposing pitchers — pitch tunneling · Hitter Point of View (perspectiva del bateador)</div>
+    <div class="note" data-i18n="tunnelNote">KNCT-style arsenal plot in Hitter Point of View (perspectiva del bateador) — IVB vs HB with tunnel rays. Pair distances for primary fastball vs offspeed.</div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="tunnel-search" placeholder="Pitcher / team" oninput="fillArsenalSelects('tunnel')"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -427,7 +427,7 @@ function movementSvg(pitches, {tunnel=false}={}) {
     s+=`<circle cx="${px}" cy="${pz}" r="7" fill="${p.color}" opacity=".92" stroke="#0f172a" stroke-width="1.5"/>`;
     s+=`<text x="${lx2}" y="${pz+3}" font-size="8.5" fill="${p.color}" font-family="IBM Plex Mono,monospace" font-weight="700" text-anchor="${anc}">${p.type}</text>`;
   });
-  s+=`<text x="${P+pW/2}" y="${H-3}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace">HB hitter view (in) →</text>`;
+  s+=`<text x="${P+pW/2}" y="${H-3}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace">HB · Hitter POV (in) →</text>`;
   s+=`<text x="9" y="${P+pH/2}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace" transform="rotate(-90 9 ${P+pH/2})">↑ IVB (in)</text>`;
   return s+'</svg>';
 }
@@ -544,10 +544,11 @@ function renderTunnel(){
   const p=getArsenalPitcher('tunnel-player');
   const el=document.getElementById('tunnel-view');
   if(!p){ el.innerHTML='<div class="empty">No opposing pitcher arsenal loaded.</div>'; return; }
+  const pov = (typeof t === 'function' ? t('hitterPov') : null) || 'Hitter Point of View (perspectiva del bateador)';
   el.innerHTML=`<div class="arsenal-layout">
     <div class="arsenal-plot-card">
       <h3>${p.name}${p.throws?' · '+p.throws+'HP':''}${p.team?' · '+p.team:''}</h3>
-      <div class="sub">Hitter perspective · tunnel rays from (0,0)</div>
+      <div class="sub"><strong>${pov}</strong> · tunnel rays from (0,0)</div>
       ${movementSvg(p.arsenal,{tunnel:true})}
     </div>
     <div class="arsenal-side">
