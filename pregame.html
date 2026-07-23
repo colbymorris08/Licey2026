@@ -313,11 +313,11 @@
     </div>
   </div>
 </main>
-<script src="i18n.js?v=pov4"></script>
+<script src="i18n.js?v=spray1"></script>
 <script>
 let CACHE = {}, FPS = {}, sortState = {}, FPS_AVG = { fps: 0.28, fpsRisp: 0.28 };
 const pct = v => v == null ? '—' : (v*100).toFixed(1)+'%';
-const ASSET_V = 'pov4';
+const ASSET_V = 'spray1';
 
 function fpsFor(pid) {
   const row = FPS[String(pid)];
@@ -756,17 +756,144 @@ function renderStuff(){
   }).join('');
 }
 function drawSpray(canvas, points){
+  if(!canvas) return;
   const ctx=canvas.getContext('2d');
-  const w=canvas.width=canvas.clientWidth*2;
-  const h=canvas.height=canvas.clientHeight*2;
+  const w=canvas.width=Math.max(320, canvas.clientWidth)*2;
+  const h=canvas.height=Math.max(280, canvas.clientHeight)*2;
   ctx.clearRect(0,0,w,h);
-  ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle='#9ca3af'; ctx.beginPath();
-  ctx.moveTo(w*0.5, h*0.88); ctx.lineTo(w*0.12, h*0.2); ctx.lineTo(w*0.88, h*0.2); ctx.closePath(); ctx.stroke();
+
+  // Sky / warning-track backdrop
+  ctx.fillStyle='#f1f5f9';
+  ctx.fillRect(0,0,w,h);
+
+  const cx=w*0.5;
+  const homeY=h*0.92;
+  const fenceR=Math.min(w,h)*0.82;
+  const foulSpread=Math.PI*0.42; // ~76° foul territory wedge each side of CF → ~84° fair
+
+  // Outfield grass (fair territory wedge)
+  ctx.beginPath();
+  ctx.moveTo(cx, homeY);
+  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
+  ctx.closePath();
+  ctx.fillStyle='#b7dfb9';
+  ctx.fill();
+
+  // Warning track ring
+  ctx.beginPath();
+  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
+  ctx.arc(cx, homeY, fenceR*0.92, -Math.PI/2 + foulSpread, -Math.PI/2 - foulSpread, true);
+  ctx.closePath();
+  ctx.fillStyle='#c4a574';
+  ctx.fill();
+
+  // Re-clip grass inside warning track
+  ctx.beginPath();
+  ctx.moveTo(cx, homeY);
+  ctx.arc(cx, homeY, fenceR*0.92, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
+  ctx.closePath();
+  ctx.fillStyle='#b7dfb9';
+  ctx.fill();
+
+  // Infield dirt diamond (square on point: home / 1B / 2B / 3B)
+  const hs=fenceR*0.28; // home → base reach
+  const home={x:cx, y:homeY};
+  const first={x:cx+hs, y:homeY-hs};
+  const second={x:cx, y:homeY-2*hs};
+  const third={x:cx-hs, y:homeY-hs};
+
+  // Dirt circle behind mound / basepaths
+  ctx.beginPath();
+  ctx.moveTo(home.x, home.y);
+  ctx.lineTo(first.x, first.y);
+  ctx.lineTo(second.x, second.y);
+  ctx.lineTo(third.x, third.y);
+  ctx.closePath();
+  ctx.fillStyle='#e6c89a';
+  ctx.fill();
+
+  // Basepaths (diamond outline)
+  ctx.strokeStyle='#fff';
+  ctx.lineWidth=2.5;
+  ctx.beginPath();
+  ctx.moveTo(home.x, home.y);
+  ctx.lineTo(first.x, first.y);
+  ctx.lineTo(second.x, second.y);
+  ctx.lineTo(third.x, third.y);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Pitcher's mound
+  ctx.beginPath();
+  ctx.arc(cx, homeY-hs, Math.max(5, hs*0.08), 0, Math.PI*2);
+  ctx.fillStyle='#d2b48c';
+  ctx.fill();
+  ctx.strokeStyle='#c4a574';
+  ctx.lineWidth=1;
+  ctx.stroke();
+
+  // Bases
+  const baseSize=Math.max(4, hs*0.06);
+  [[first,'1B'],[second,'2B'],[third,'3B']].forEach(([b])=>{
+    ctx.save();
+    ctx.translate(b.x, b.y);
+    ctx.rotate(-Math.PI/4);
+    ctx.fillStyle='#fff';
+    ctx.fillRect(-baseSize, -baseSize, baseSize*2, baseSize*2);
+    ctx.restore();
+  });
+  // Home plate
+  ctx.beginPath();
+  ctx.moveTo(home.x, home.y+baseSize);
+  ctx.lineTo(home.x+baseSize, home.y);
+  ctx.lineTo(home.x+baseSize*0.55, home.y-baseSize);
+  ctx.lineTo(home.x-baseSize*0.55, home.y-baseSize);
+  ctx.lineTo(home.x-baseSize, home.y);
+  ctx.closePath();
+  ctx.fillStyle='#fff';
+  ctx.fill();
+
+  // Foul lines
+  const lfX=cx+Math.cos(-Math.PI/2 - foulSpread)*fenceR;
+  const lfY=homeY+Math.sin(-Math.PI/2 - foulSpread)*fenceR;
+  const rfX=cx+Math.cos(-Math.PI/2 + foulSpread)*fenceR;
+  const rfY=homeY+Math.sin(-Math.PI/2 + foulSpread)*fenceR;
+  ctx.strokeStyle='rgba(255,255,255,0.95)';
+  ctx.lineWidth=1.5;
+  ctx.beginPath();
+  ctx.moveTo(home.x, home.y); ctx.lineTo(lfX, lfY);
+  ctx.moveTo(home.x, home.y); ctx.lineTo(rfX, rfY);
+  ctx.stroke();
+
+  // Outfield fence
+  ctx.beginPath();
+  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
+  ctx.strokeStyle='#37474f';
+  ctx.lineWidth=3;
+  ctx.stroke();
+
+  // Labels
+  ctx.fillStyle='#546e7a';
+  ctx.font=`${Math.max(10, w*0.028)}px "IBM Plex Mono", monospace`;
+  ctx.textAlign='center';
+  ctx.fillText('LF', cx - fenceR*0.55, homeY - fenceR*0.55);
+  ctx.fillText('CF', cx, homeY - fenceR*0.88);
+  ctx.fillText('RF', cx + fenceR*0.55, homeY - fenceR*0.55);
+
+  // Statcast hc_x / hc_y → canvas (home ≈ 125.42, 198.27; outfield = smaller y)
+  const scale=fenceR/170;
   for(const p of points||[]){
-    const x=(p.x/250)*w, y=h-((p.y/250)*h);
+    const dx=(Number(p.x)-125.42)*scale;
+    const dy=(198.27-Number(p.y))*scale;
+    const px=cx+dx;
+    const py=homeY-dy;
+    ctx.beginPath();
+    ctx.arc(px, py, 3.8, 0, Math.PI*2);
     ctx.fillStyle='#005A9C';
-    ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2); ctx.fill();
+    ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.7)';
+    ctx.lineWidth=1;
+    ctx.stroke();
   }
 }
 function filteredSprayMlb(){
