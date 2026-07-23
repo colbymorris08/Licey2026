@@ -48,7 +48,6 @@
     <button class="tab" data-tab="usage" onclick="switchTab('usage')" data-i18n="usageTab">Pitch Usage</button>
     <button class="tab" data-tab="platoon" onclick="switchTab('platoon')" data-i18n="platoonTab">Platoon Splits</button>
     <button class="tab" data-tab="ofdef" onclick="switchTab('ofdef')" data-i18n="ofdefTab">OF Jump / Arm</button>
-    <button class="tab" data-tab="infield" onclick="switchTab('infield')" data-i18n="infieldTab">IF Shift / Heatmaps</button>
     <button class="tab" data-tab="tunnel" onclick="switchTab('tunnel')" data-i18n="tunnelTab">Pitch Tunneling</button>
     <button class="tab" data-tab="tth" onclick="switchTab('tth')" data-i18n="tthTab">Time to Home</button>
   </div>
@@ -234,45 +233,59 @@
     </div>
   </div>
   <div id="panel-usage" class="panel">
-    <div class="coming-soon">
-      <h3 data-i18n="usageTitle">Pitch usage by count</h3>
-      <p data-i18n="usageBody">Opposing starters: first-pitch%, 0-2 / 1-2 / 3-2 pitch mix from Prospect Savant or Statcast.</p>
-      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
+    <div class="section-label" data-i18n="usageLabel">Opposing pitchers — pitch usage (hitter view)</div>
+    <div class="note" data-i18n="usageNote">KNCT-style arsenal movement from the hitter’s perspective. Overall mix from Prospect Savant; count buckets (0-0 / 0-2 / 1-2 / 2-2 / 3-2) from MLB Statcast when tracked.</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="usage-search" placeholder="Pitcher / team" oninput="fillArsenalSelects('usage')"></div>
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="usage-team" onchange="fillArsenalSelects('usage')">
+          <option value="all">All Teams</option>
+        </select>
+      </div>
+      <div class="filter-field"><label data-i18n="player">Pitcher</label><select id="usage-player" onchange="renderUsage()"></select></div>
     </div>
+    <div id="usage-view"></div>
   </div>
   <div id="panel-platoon" class="panel">
-    <div class="coming-soon">
-      <h3 data-i18n="platoonTitle">Platoon splits matrix</h3>
-      <p data-i18n="platoonBody">Licey bats vs RHP/LHP and vs opposing arms — wOBA/OPS by platoon from LIDOM + AAA.</p>
-      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
+    <div class="section-label" data-i18n="platoonLabel">Opposing pitchers — platoon shape (hitter view)</div>
+    <div class="note" data-i18n="platoonNote">Arsenal IVB/HB vs RHB and vs LHB from MLB Statcast when tracked. Overall PS arsenal shown when platoon tracking is missing.</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="platoon-search" placeholder="Pitcher / team" oninput="fillArsenalSelects('platoon')"></div>
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="platoon-team" onchange="fillArsenalSelects('platoon')">
+          <option value="all">All Teams</option>
+        </select>
+      </div>
+      <div class="filter-field"><label data-i18n="player">Pitcher</label><select id="platoon-player" onchange="renderPlatoon()"></select></div>
     </div>
+    <div id="platoon-view"></div>
   </div>
   <div id="panel-ofdef" class="panel">
-    <div class="coming-soon">
+    <div class="needs-video">
       <h3 data-i18n="ofdefTitle">Outfield jump / arm grades</h3>
       <p data-i18n="ofdefBody">Advance OF defense: jump, route, arm strength for extra-base decisions.</p>
-      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
-    </div>
-  </div>
-  <div id="panel-infield" class="panel">
-    <div class="coming-soon">
-      <h3 data-i18n="infieldTitle">Infield shift / spray heatmaps</h3>
-      <p data-i18n="infieldBody">Combine MLB sprays with LIDOM pull rates for positioning cards.</p>
-      <div class="tagline-note" data-i18n="cachePendingSpray">Cache not built yet — MLB sprays already live under Spray Charts.</div>
+      <div class="tagline-note" data-i18n="needsVideo">Needs to be built with video from BATS / Synergy.</div>
     </div>
   </div>
   <div id="panel-tunnel" class="panel">
-    <div class="coming-soon">
-      <h3 data-i18n="tunnelTitle">Pitch tunneling / shape</h3>
-      <p data-i18n="tunnelBody">IVB/HB overlays for opposing arsenals.</p>
-      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
+    <div class="section-label" data-i18n="tunnelLabel">Opposing pitchers — pitch tunneling / shape (hitter view)</div>
+    <div class="note" data-i18n="tunnelNote">Same KNCT arsenal movement plot from the hitter’s perspective — IVB vs HB with tunnel rays from release center. Pair distances for primary fastball vs offspeed.</div>
+    <div class="filters">
+      <div class="filter-field"><label data-i18n="search">Search</label><input id="tunnel-search" placeholder="Pitcher / team" oninput="fillArsenalSelects('tunnel')"></div>
+      <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
+        <select id="tunnel-team" onchange="fillArsenalSelects('tunnel')">
+          <option value="all">All Teams</option>
+        </select>
+      </div>
+      <div class="filter-field"><label data-i18n="player">Pitcher</label><select id="tunnel-player" onchange="renderTunnel()"></select></div>
     </div>
+    <div id="tunnel-view"></div>
   </div>
   <div id="panel-tth" class="panel">
-    <div class="coming-soon">
+    <div class="needs-video">
       <h3 data-i18n="tthTitle">Time to home / WP/PB</h3>
       <p data-i18n="tthBody">Stolen base windows vs catcher + pitcher — time-to-home, wild pitch / passed ball rates.</p>
-      <div class="tagline-note" data-i18n="cachePendingShort">Cache not built yet.</div>
+      <div class="tagline-note" data-i18n="needsVideo">Needs to be built with video from BATS / Synergy.</div>
     </div>
   </div>
 </main>
@@ -327,7 +340,223 @@ function switchTab(name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id===`panel-${name}`));
   if(name==='spray') renderSpray();
+  if(name==='usage') renderUsage();
+  if(name==='platoon') renderPlatoon();
+  if(name==='tunnel') renderTunnel();
 }
+
+const PITCH_COLORS = {
+  FF:'#e11d48', FA:'#e11d48', SI:'#f97316', FT:'#ea580c', FC:'#a855f7',
+  SL:'#2563eb', ST:'#1d4ed8', CU:'#0ea5e9', KC:'#0284c7', CH:'#16a34a',
+  FS:'#15803d', FO:'#65a30d', SC:'#ca8a04', KN:'#78716c', EP:'#a8a29e',
+  SV:'#7c3aed', CS:'#0891b2'
+};
+
+function arsenalPitchers() {
+  return (CACHE.arsenals && CACHE.arsenals.pitchers) || [];
+}
+function filterArsenalList(q, team) {
+  const qq = (q||'').toLowerCase();
+  return arsenalPitchers().filter(r=>{
+    if(team && team!=='all' && r.team!==team) return false;
+    if(qq && !`${r.name} ${r.team}`.toLowerCase().includes(qq)) return false;
+    return (r.arsenal||[]).length > 0;
+  });
+}
+function fillArsenalTeamSelects() {
+  const teams=[...new Set(arsenalPitchers().map(r=>r.team).filter(Boolean))].sort();
+  ['usage-team','platoon-team','tunnel-team'].forEach(id=>{
+    const sel=document.getElementById(id);
+    if(!sel) return;
+    const cur=sel.value||'all';
+    sel.innerHTML = '<option value="all">All Teams</option>' + teams.map(t=>`<option value="${t}">${t}</option>`).join('');
+    sel.value = teams.includes(cur) || cur==='all' ? cur : 'all';
+  });
+}
+function fillArsenalSelects(kind) {
+  const configs={
+    usage:['usage-search','usage-team','usage-player', renderUsage],
+    platoon:['platoon-search','platoon-team','platoon-player', renderPlatoon],
+    tunnel:['tunnel-search','tunnel-team','tunnel-player', renderTunnel],
+  };
+  const keys = kind ? [kind] : Object.keys(configs);
+  keys.forEach(k=>{
+    const [searchId, teamId, playerId, renderFn]=configs[k];
+    const q=document.getElementById(searchId)?.value||'';
+    const team=document.getElementById(teamId)?.value||'all';
+    const sel=document.getElementById(playerId);
+    if(!sel) return;
+    const prev=sel.value;
+    const rows=filterArsenalList(q, team);
+    sel.innerHTML = rows.map(r=>`<option value="${r.player_id}">${r.name}${r.throws?' ('+r.throws+'HP)':''} · ${r.team||''}</option>`).join('')
+      || '<option value="">—</option>';
+    if([...sel.options].some(o=>o.value===prev)) sel.value=prev;
+    renderFn();
+  });
+}
+function getArsenalPitcher(selId) {
+  const id=Number(document.getElementById(selId)?.value||0);
+  return arsenalPitchers().find(r=>Number(r.player_id)===id) || null;
+}
+function movementSvg(pitches, {tunnel=false}={}) {
+  const pts=(pitches||[]).filter(p=>p.hb_hitter!=null && p.ivb!=null).map(p=>({
+    type:p.type, x:Number(p.hb_hitter), z:Number(p.ivb),
+    color:PITCH_COLORS[p.type]||'#94a3b8'
+  }));
+  const W=320,H=320,P=28,pW=W-P*2,pH=H-P*2,R=22;
+  const cx=v=>P+((-v+R)/(R*2))*pW;
+  const cy=v=>P+((-v+R)/(R*2))*pH;
+  let s=`<svg class="plot" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  s+=`<rect width="${W}" height="${H}" fill="#14141f" rx="6"/>`;
+  for(let v=-20;v<=20;v+=5){
+    const lx=cx(v), ly=cy(v), c=v===0?'#3a3a5c':'#1c1c2c', w=v===0?1:0.5;
+    s+=`<line x1="${lx}" y1="${P}" x2="${lx}" y2="${P+pH}" stroke="${c}" stroke-width="${w}"/>`;
+    s+=`<line x1="${P}" y1="${ly}" x2="${P+pW}" y2="${ly}" stroke="${c}" stroke-width="${w}"/>`;
+    s+=`<text x="${lx}" y="${P+pH+12}" text-anchor="middle" font-size="7.5" fill="#94a3b8" font-family="IBM Plex Mono,monospace">${v}</text>`;
+    s+=`<text x="${P-5}" y="${ly+3}" text-anchor="end" font-size="7.5" fill="#94a3b8" font-family="IBM Plex Mono,monospace">${v}</text>`;
+  }
+  if(tunnel){
+    pts.forEach(p=>{
+      s+=`<line x1="${cx(0)}" y1="${cy(0)}" x2="${cx(p.x)}" y2="${cy(p.z)}" stroke="${p.color}" stroke-width="1.2" opacity=".45"/>`;
+    });
+  }
+  pts.forEach(p=>{
+    const px=cx(p.x), pz=cy(p.z);
+    const anc=p.x<0?'start':'end';
+    const lx2=px+(p.x<0?10:-10);
+    s+=`<circle cx="${px}" cy="${pz}" r="7" fill="${p.color}" opacity=".92" stroke="#0f172a" stroke-width="1.5"/>`;
+    s+=`<text x="${lx2}" y="${pz+3}" font-size="8.5" fill="${p.color}" font-family="IBM Plex Mono,monospace" font-weight="700" text-anchor="${anc}">${p.type}</text>`;
+  });
+  s+=`<text x="${P+pW/2}" y="${H-3}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace">HB hitter view (in) →</text>`;
+  s+=`<text x="9" y="${P+pH/2}" text-anchor="middle" font-size="7" fill="#64748b" font-family="IBM Plex Mono,monospace" transform="rotate(-90 9 ${P+pH/2})">↑ IVB (in)</text>`;
+  return s+'</svg>';
+}
+function usagePieSvg(slices) {
+  const cleaned=(slices||[]).map(s=>({pitch:s.type||s.pitch, value:Number(s.usage)||0, color:PITCH_COLORS[s.type||s.pitch]||'#94a3b8'}))
+    .filter(s=>s.value>0);
+  let total=cleaned.reduce((a,b)=>a+b.value,0) || 1;
+  const r=28,cx=32,cy=32; let angle=-Math.PI/2;
+  let svg='<svg width="64" height="64" viewBox="0 0 64 64">';
+  cleaned.forEach(s=>{
+    const frac=s.value/total, sweep=frac*Math.PI*2;
+    const x1=cx+r*Math.cos(angle), y1=cy+r*Math.sin(angle);
+    angle+=sweep;
+    const x2=cx+r*Math.cos(angle), y2=cy+r*Math.sin(angle);
+    const large=sweep>Math.PI?1:0;
+    svg+=`<path d="M${cx} ${cy} L${x1} ${y1} A${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${s.color}"/>`;
+  });
+  return svg+'</svg>';
+}
+function arsenalTableHtml(pitches) {
+  const rows=(pitches||[]).map(p=>`<tr>
+    <td class="player-name" style="color:${PITCH_COLORS[p.type]||'#111'}">${p.type}</td>
+    <td>${p.name||p.type}</td>
+    <td class="num">${p.velo??'—'}</td>
+    <td class="num">${p.spin??'—'}</td>
+    <td class="num">${p.ivb??'—'}</td>
+    <td class="num">${p.hb_hitter??'—'}</td>
+    <td class="num">${p.usage!=null?p.usage+'%':'—'}</td>
+    <td class="num">${p.pitches??'—'}</td>
+    <td class="num">${p.ps_stuff??'—'}</td>
+  </tr>`).join('') || '<tr><td colspan="9">No arsenal rows</td></tr>';
+  return `<div class="table-wrap"><table><thead><tr>
+    <th>Type</th><th>Pitch</th><th class="num">Velo</th><th class="num">Spin</th>
+    <th class="num">IVB″</th><th class="num">HB″</th><th class="num">Use</th><th class="num">#</th><th class="num">Stuff+</th>
+  </tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function tunnelPairsHtml(pitches) {
+  const pts=(pitches||[]).filter(p=>p.hb_hitter!=null && p.ivb!=null);
+  const fb=pts.find(p=>['FF','FA','SI','FT'].includes(p.type)) || pts[0];
+  if(!fb) return '';
+  const others=pts.filter(p=>p!==fb).slice(0,6);
+  const rows=others.map(p=>{
+    const d=Math.hypot(Number(p.hb_hitter)-Number(fb.hb_hitter), Number(p.ivb)-Number(fb.ivb));
+    return `<tr><td>${fb.type} → ${p.type}</td><td class="num">${d.toFixed(1)}″</td></tr>`;
+  }).join('');
+  return `<div class="section-label" style="margin-top:12px">Tunnel separation from ${fb.type}</div>
+    <div class="table-wrap"><table><thead><tr><th>Pair</th><th class="num">Δ movement</th></tr></thead><tbody>${rows||'<tr><td colspan="2">—</td></tr>'}</tbody></table></div>`;
+}
+function pitcherMeta(p) {
+  if(!p) return '<div class="empty">Select a pitcher with arsenal data.</div>';
+  const src=[p.ps_source && `${p.ps_source} ${p.ps_season||''}`, p.statcast_source && `${p.statcast_source} ${(p.statcast_seasons||[]).join('/')}`]
+    .filter(Boolean).join(' · ') || '—';
+  return `<div class="arsenal-plot-card">
+    <h3>${p.name}${p.throws?' · '+p.throws+'HP':''}${p.team?' · '+p.team:''}</h3>
+    <div class="sub">Hitter perspective · Stuff+ ${p.stuff_plus??'—'} · ${src}</div>
+    ${movementSvg(p.arsenal)}
+  </div>`;
+}
+function renderUsage(){
+  const p=getArsenalPitcher('usage-player');
+  const el=document.getElementById('usage-view');
+  if(!p){ el.innerHTML='<div class="empty">No opposing pitcher arsenal loaded.</div>'; return; }
+  const buckets=(CACHE.arsenals?.count_buckets)||['0-0','0-2','1-2','2-2','3-2'];
+  const by=p.usage_by_count||{};
+  const hasCounts=Object.keys(by).length>0;
+  const pieHtml = buckets.map(ck=>{
+    const slices=by[ck];
+    if(slices&&slices.length) return `<div class="usage-pie-cell">${usagePieSvg(slices)}<strong>${ck}</strong></div>`;
+    return `<div class="usage-pie-cell">${usagePieSvg(p.arsenal)}<strong>${ck}</strong><div style="font-size:10px;color:#6b7280">${hasCounts?'n&lt;8':'overall*'}</div></div>`;
+  }).join('');
+  el.innerHTML=`<div class="arsenal-layout">
+    ${pitcherMeta(p)}
+    <div class="arsenal-side">
+      <div class="section-label">Pitch usage by count</div>
+      ${hasCounts?'':'<div class="note">Count splits pending Statcast tracking — showing overall mix in each bucket for now.</div>'}
+      <div class="usage-pie-grid">${pieHtml}</div>
+      ${arsenalTableHtml(p.arsenal)}
+    </div>
+  </div>`;
+}
+function renderPlatoon(){
+  const p=getArsenalPitcher('platoon-player');
+  const el=document.getElementById('platoon-view');
+  if(!p){ el.innerHTML='<div class="empty">No opposing pitcher arsenal loaded.</div>'; return; }
+  const pl=p.platoon||{};
+  const vsR=pl.vs_RHB||[];
+  const vsL=pl.vs_LHB||[];
+  if(!vsR.length && !vsL.length){
+    el.innerHTML=`<div class="arsenal-layout">
+      ${pitcherMeta(p)}
+      <div class="arsenal-side">
+        <div class="note">Platoon Statcast splits not tracked yet for this arm — overall hitter-view arsenal below.</div>
+        ${arsenalTableHtml(p.arsenal)}
+      </div>
+    </div>`;
+    return;
+  }
+  el.innerHTML=`<div class="platoon-grid">
+    <div class="arsenal-plot-card">
+      <h3>vs RHB</h3>
+      <div class="sub">Hitter perspective movement</div>
+      ${movementSvg(vsR.length?vsR:p.arsenal)}
+      ${arsenalTableHtml(vsR.length?vsR:p.arsenal)}
+    </div>
+    <div class="arsenal-plot-card">
+      <h3>vs LHB</h3>
+      <div class="sub">Hitter perspective movement</div>
+      ${movementSvg(vsL.length?vsL:p.arsenal)}
+      ${arsenalTableHtml(vsL.length?vsL:p.arsenal)}
+    </div>
+  </div>`;
+}
+function renderTunnel(){
+  const p=getArsenalPitcher('tunnel-player');
+  const el=document.getElementById('tunnel-view');
+  if(!p){ el.innerHTML='<div class="empty">No opposing pitcher arsenal loaded.</div>'; return; }
+  el.innerHTML=`<div class="arsenal-layout">
+    <div class="arsenal-plot-card">
+      <h3>${p.name}${p.throws?' · '+p.throws+'HP':''}${p.team?' · '+p.team:''}</h3>
+      <div class="sub">Hitter perspective · tunnel rays from (0,0)</div>
+      ${movementSvg(p.arsenal,{tunnel:true})}
+    </div>
+    <div class="arsenal-side">
+      ${arsenalTableHtml(p.arsenal)}
+      ${tunnelPairsHtml(p.arsenal)}
+    </div>
+  </div>`;
+}
+
 function sortTbl(id,col){
   const key=id+col; sortState[key]=!sortState[key]; const asc=sortState[key];
   const tb=document.querySelector('#'+id+' tbody');
@@ -504,15 +733,19 @@ Promise.all([
   fetch('data/pregame_opposing_stuff.json').then(r=>r.json()).catch(()=>[]),
   fetch('data/pregame_spray_charts.json').then(r=>r.json()).catch(()=>({})),
   fetch('data/fps_cache.json').then(r=>r.json()).catch(()=>({})),
-]).then(([lineup, matchup, br, stuff, spray, fps])=>{
-  CACHE={lineup, matchup, br, stuff, spray};
+  fetch('data/pregame_pitcher_arsenals.json').then(r=>r.json()).catch(()=>({pitchers:[]})),
+]).then(([lineup, matchup, br, stuff, spray, fps, arsenals])=>{
+  CACHE={lineup, matchup, br, stuff, spray, arsenals};
   FPS=fps;
   computeFpsAvgs();
   document.getElementById('loading').style.display='none';
   fillLineupSeasons();
   fillStuffTeams();
+  fillArsenalTeamSelects();
+  fillArsenalSelects();
   applyI18n();
   renderLineup(); renderMatchup(); renderBR(); renderStuff(); renderSpray();
+  renderUsage(); renderPlatoon(); renderTunnel();
 }).catch(e=>{
   document.getElementById('loading').textContent='Failed loading pregame data: '+e.message;
 });

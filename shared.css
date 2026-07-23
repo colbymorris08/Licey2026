@@ -157,6 +157,56 @@ tbody tr:hover { background: #f8fafc; }
 .idea h3 { font-size: 13px; color: var(--navy); margin-bottom: 6px; }
 .idea p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 .arsenal { font-size: 12px; color: var(--muted); }
+.arsenal-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 340px) 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-top: 8px;
+}
+.arsenal-plot-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+.arsenal-plot-card h3 {
+  font-size: 13px; color: #f8fafc; margin-bottom: 4px;
+}
+.arsenal-plot-card .sub {
+  font-size: 11px; color: #94a3b8; margin-bottom: 10px; line-height: 1.4;
+}
+.arsenal-plot-card svg.plot { width: 100%; height: auto; display: block; }
+.arsenal-side { min-width: 0; }
+.usage-pie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.usage-pie-cell {
+  text-align: center; border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px 6px; background: #fff;
+}
+.usage-pie-cell strong { display: block; font-size: 12px; margin-top: 4px; color: var(--navy); }
+.usage-pie-cell svg { display: block; margin: 0 auto; }
+.platoon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+.needs-video {
+  border: 1px solid #bfdbfe; background: #eff6ff; color: #1e3a5f;
+  border-radius: 10px; padding: 18px; max-width: 820px; line-height: 1.55;
+}
+.needs-video h3 { font-size: 15px; color: var(--navy); margin-bottom: 8px; }
+.needs-video p { font-size: 14px; margin-bottom: 8px; }
+.needs-video .tagline-note { font-size: 12px; color: #3b5b86; }
+@media (max-width: 860px) {
+  .arsenal-layout { grid-template-columns: 1fr; }
+}
 @media (max-width: 720px) {
   .topbar {
     grid-template-columns: 1fr auto;
