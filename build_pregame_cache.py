@@ -478,10 +478,56 @@ def build_spray_charts(hitter_ids: dict[int, str], people: dict) -> dict:
             continue
 
         def pack(sub, label):
-            pts = [
-                {"x": round(float(r.hc_x), 1), "y": round(float(r.hc_y), 1), "ev": None}
-                for r in sub.itertuples()
-            ][:250]
+            hit_map = {
+                "home_run": "HR",
+                "triple": "3B",
+                "double": "2B",
+                "single": "1B",
+                "field_out": "OUT",
+                "force_out": "OUT",
+                "grounded_into_double_play": "OUT",
+                "double_play": "OUT",
+                "triple_play": "OUT",
+                "fielders_choice": "OUT",
+                "fielders_choice_out": "OUT",
+                "sac_fly": "SF",
+                "sac_fly_double_play": "SF",
+                "sac_bunt": "SAC",
+                "field_error": "E",
+            }
+            pts = []
+            for r in sub.itertuples():
+                ev = getattr(r, "events", None)
+                try:
+                    import math as _math
+
+                    if ev is not None and isinstance(ev, float) and _math.isnan(ev):
+                        ev = None
+                except Exception:
+                    pass
+                hit = hit_map.get(str(ev), "BIP") if ev else "BIP"
+                ls = getattr(r, "launch_speed", None)
+                dist = getattr(r, "hit_distance_sc", None)
+                try:
+                    ls = None if ls is None or (isinstance(ls, float) and str(ls) == "nan") else round(float(ls), 1)
+                except Exception:
+                    ls = None
+                try:
+                    dist = None if dist is None or (isinstance(dist, float) and str(dist) == "nan") else round(float(dist), 1)
+                except Exception:
+                    dist = None
+                pts.append(
+                    {
+                        "x": round(float(r.hc_x), 1),
+                        "y": round(float(r.hc_y), 1),
+                        "ev": ls,
+                        "dist": dist,
+                        "hit": hit,
+                        "event": str(ev) if ev else None,
+                    }
+                )
+                if len(pts) >= 250:
+                    break
             return {"split": label, "n": len(sub), "points": pts}
 
         nobody = bip[bip["on_1b"].isna() & bip["on_2b"].isna() & bip["on_3b"].isna()]

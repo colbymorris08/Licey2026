@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="shared.css?v=spray2">
 <style>
   .mode-tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
   .mode-tabs button {
@@ -173,6 +173,10 @@
     </div>
 
     <div class="banner" id="data-banner">Loading…</div>
+    <div class="legend-row" id="stats-color-key" data-i18n-html="colorKeyGreenBlue">
+      <span class="swatch"><span class="txt-good">● High</span> above avg / Stuff+ ≥ 105</span>
+      <span class="swatch"><span class="txt-low">● Low</span> below avg / Stuff+ ≤ 90</span>
+    </div>
     <div id="loading" class="loading">Loading stats…</div>
     <div class="table-wrap" id="table-wrap" style="display:none">
       <table id="stats-table"><thead></thead><tbody></tbody></table>

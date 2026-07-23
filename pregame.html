@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="shared.css?v=spray2">
 </head>
 <body>
 <div class="topbar">
@@ -213,6 +213,10 @@
   <div id="panel-stuff" class="panel">
     <div class="section-label" data-i18n="stuffLabel">Advance scouting — opposing pitcher Stuff+</div>
     <div class="note" data-i18n="stuffNote">AAA / MiLB tracking via Prospect Savant. MLB arms use PS when tracked; otherwise marked for Statcast stuff index.</div>
+    <div class="legend-row" data-i18n-html="colorKeyGreenBlue">
+      <span class="swatch"><span class="txt-good">● High</span> above avg / Stuff+ ≥ 105</span>
+      <span class="swatch"><span class="txt-low">● Low</span> below avg / Stuff+ ≤ 90</span>
+    </div>
     <div class="filters">
       <div class="filter-field"><label data-i18n="search">Search</label><input id="stuff-search" placeholder="Pitcher / team" oninput="renderStuff()"></div>
       <div class="filter-field"><label data-i18n="lidomTeam">LIDOM Team</label>
@@ -259,7 +263,11 @@
       </div>
     </div>
     <div id="spray-mlb" class="spray-grid"></div>
-    <div class="section-label" style="margin-top:20px" data-i18n="aaaProxyLabel">AAA directional proxy (green = above pool avg · blue = below)</div>
+    <div class="section-label" style="margin-top:20px" data-i18n="aaaProxyLabel">AAA directional proxy</div>
+    <div class="legend-row" data-i18n-html="colorKeyGreenBlue">
+      <span class="swatch"><span class="txt-good">● High</span> above pool avg</span>
+      <span class="swatch"><span class="txt-low">● Low</span> below pool avg</span>
+    </div>
     <div class="table-wrap">
       <table id="tbl-aaa-proxy"><thead><tr>
         <th>Hitter</th><th>Team</th><th>Level</th>
@@ -356,11 +364,11 @@
     </div>
   </div>
 </main>
-<script src="i18n.js?v=spray1"></script>
+<script src="i18n.js?v=spray2"></script>
 <script>
 let CACHE = {}, FPS = {}, sortState = {}, FPS_AVG = { fps: 0.28, fpsRisp: 0.28 };
 const pct = v => v == null ? '—' : (v*100).toFixed(1)+'%';
-const ASSET_V = 'hvp1';
+const ASSET_V = 'spray2';
 
 function fpsFor(pid) {
   const row = FPS[String(pid)];
@@ -824,51 +832,93 @@ function renderStuff(){
 function drawSpray(canvas, points){
   if(!canvas) return;
   const ctx=canvas.getContext('2d');
-  const w=canvas.width=Math.max(320, canvas.clientWidth)*2;
-  const h=canvas.height=Math.max(280, canvas.clientHeight)*2;
+  const w=canvas.width=Math.max(360, canvas.clientWidth)*2;
+  const h=canvas.height=Math.max(420, canvas.clientHeight)*2;
   ctx.clearRect(0,0,w,h);
 
-  // Sky / warning-track backdrop
-  ctx.fillStyle='#f1f5f9';
+  ctx.fillStyle='#e8eef4';
   ctx.fillRect(0,0,w,h);
 
-  const cx=w*0.5;
-  const homeY=h*0.92;
-  const fenceR=Math.min(w,h)*0.82;
-  const foulSpread=Math.PI*0.42; // ~76° foul territory wedge each side of CF → ~84° fair
+  // Statcast → feet: home (125.42, 198.27); +x toward RF, +y toward CF. Scale ≈ 2.5 ft/unit.
+  const CF_FT = 400;       // CF fence length (ft) — maps to outer fence arc
+  const FOUL_FT = 330;     // foul-pole distance
+  const FOUL = Math.PI/4;  // 45° each side of CF → 90° fair territory
+  const pad = Math.min(w,h)*0.06;
+  const cx = w*0.5;
+  const homeY = h - pad;
+  const fenceR = Math.min(w*0.48, (homeY - pad)); // pixels for CF_FT
+  const pxPerFt = fenceR / CF_FT;
 
-  // Outfield grass (fair territory wedge)
+  function toCanvas(xFt, yFt){
+    return { x: cx + xFt * pxPerFt, y: homeY - yFt * pxPerFt };
+  }
+  function scToFt(p){
+    return {
+      x: 2.5 * (Number(p.x) - 125.42),
+      y: 2.5 * (198.27 - Number(p.y)),
+    };
+  }
+
+  // Outfield grass (fair wedge)
   ctx.beginPath();
   ctx.moveTo(cx, homeY);
-  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
+  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - FOUL, -Math.PI/2 + FOUL);
   ctx.closePath();
   ctx.fillStyle='#b7dfb9';
   ctx.fill();
 
-  // Warning track ring
+  // Warning track (~30 ft inside fence)
+  const warnR = (CF_FT - 30) * pxPerFt;
   ctx.beginPath();
-  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
-  ctx.arc(cx, homeY, fenceR*0.92, -Math.PI/2 + foulSpread, -Math.PI/2 - foulSpread, true);
+  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - FOUL, -Math.PI/2 + FOUL);
+  ctx.arc(cx, homeY, warnR, -Math.PI/2 + FOUL, -Math.PI/2 - FOUL, true);
   ctx.closePath();
   ctx.fillStyle='#c4a574';
   ctx.fill();
 
-  // Re-clip grass inside warning track
+  // Inner grass again
   ctx.beginPath();
   ctx.moveTo(cx, homeY);
-  ctx.arc(cx, homeY, fenceR*0.92, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
+  ctx.arc(cx, homeY, warnR, -Math.PI/2 - FOUL, -Math.PI/2 + FOUL);
   ctx.closePath();
   ctx.fillStyle='#b7dfb9';
   ctx.fill();
 
-  // Infield dirt diamond (square on point: home / 1B / 2B / 3B)
-  const hs=fenceR*0.28; // home → base reach
-  const home={x:cx, y:homeY};
-  const first={x:cx+hs, y:homeY-hs};
-  const second={x:cx, y:homeY-2*hs};
-  const third={x:cx-hs, y:homeY-hs};
+  // Distance rings 200 / 300 / 400
+  [200, 300, 400].forEach(ft=>{
+    const r = ft * pxPerFt;
+    ctx.beginPath();
+    ctx.arc(cx, homeY, r, -Math.PI/2 - FOUL, -Math.PI/2 + FOUL);
+    ctx.strokeStyle = ft === 400 ? 'rgba(55,71,79,0.9)' : 'rgba(255,255,255,0.55)';
+    ctx.lineWidth = ft === 400 ? 3 : 1.5;
+    ctx.stroke();
+    const lab = toCanvas(0, ft);
+    ctx.fillStyle='#546e7a';
+    ctx.font=`${Math.max(11, w*0.022)}px "IBM Plex Mono", monospace`;
+    ctx.textAlign='center';
+    ctx.fillText(ft+"'", lab.x, lab.y + (ft===400 ? 14 : -4));
+  });
 
-  // Dirt circle behind mound / basepaths
+  // Foul poles at 330'
+  const lfPole = toCanvas(-FOUL_FT * Math.sin(FOUL), FOUL_FT * Math.cos(FOUL));
+  const rfPole = toCanvas( FOUL_FT * Math.sin(FOUL), FOUL_FT * Math.cos(FOUL));
+  ctx.strokeStyle='#37474f';
+  ctx.lineWidth=2;
+  [[lfPole],[rfPole]].forEach(([p])=>{
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x, p.y - 18);
+    ctx.stroke();
+  });
+
+  // Infield dirt diamond — 90 ft basepaths
+  const b90 = 90;
+  const home = toCanvas(0, 0);
+  const first = toCanvas( b90 / Math.SQRT2, b90 / Math.SQRT2);
+  const second = toCanvas(0, b90 * Math.SQRT2);
+  const third = toCanvas(-b90 / Math.SQRT2, b90 / Math.SQRT2);
+  const mound = toCanvas(0, 60.5);
+
   ctx.beginPath();
   ctx.moveTo(home.x, home.y);
   ctx.lineTo(first.x, first.y);
@@ -877,21 +927,13 @@ function drawSpray(canvas, points){
   ctx.closePath();
   ctx.fillStyle='#e6c89a';
   ctx.fill();
-
-  // Basepaths (diamond outline)
   ctx.strokeStyle='#fff';
   ctx.lineWidth=2.5;
-  ctx.beginPath();
-  ctx.moveTo(home.x, home.y);
-  ctx.lineTo(first.x, first.y);
-  ctx.lineTo(second.x, second.y);
-  ctx.lineTo(third.x, third.y);
-  ctx.closePath();
   ctx.stroke();
 
-  // Pitcher's mound
+  // Mound
   ctx.beginPath();
-  ctx.arc(cx, homeY-hs, Math.max(5, hs*0.08), 0, Math.PI*2);
+  ctx.arc(mound.x, mound.y, Math.max(4, 9*pxPerFt), 0, Math.PI*2);
   ctx.fillStyle='#d2b48c';
   ctx.fill();
   ctx.strokeStyle='#c4a574';
@@ -899,8 +941,8 @@ function drawSpray(canvas, points){
   ctx.stroke();
 
   // Bases
-  const baseSize=Math.max(4, hs*0.06);
-  [[first,'1B'],[second,'2B'],[third,'3B']].forEach(([b])=>{
+  const baseSize=Math.max(4, 5*pxPerFt);
+  [first, second, third].forEach(b=>{
     ctx.save();
     ctx.translate(b.x, b.y);
     ctx.rotate(-Math.PI/4);
@@ -908,7 +950,6 @@ function drawSpray(canvas, points){
     ctx.fillRect(-baseSize, -baseSize, baseSize*2, baseSize*2);
     ctx.restore();
   });
-  // Home plate
   ctx.beginPath();
   ctx.moveTo(home.x, home.y+baseSize);
   ctx.lineTo(home.x+baseSize, home.y);
@@ -919,48 +960,71 @@ function drawSpray(canvas, points){
   ctx.fillStyle='#fff';
   ctx.fill();
 
-  // Foul lines
-  const lfX=cx+Math.cos(-Math.PI/2 - foulSpread)*fenceR;
-  const lfY=homeY+Math.sin(-Math.PI/2 - foulSpread)*fenceR;
-  const rfX=cx+Math.cos(-Math.PI/2 + foulSpread)*fenceR;
-  const rfY=homeY+Math.sin(-Math.PI/2 + foulSpread)*fenceR;
+  // Foul lines to poles / fence
+  const lfFence = toCanvas(-CF_FT * Math.sin(FOUL), CF_FT * Math.cos(FOUL));
+  const rfFence = toCanvas( CF_FT * Math.sin(FOUL), CF_FT * Math.cos(FOUL));
   ctx.strokeStyle='rgba(255,255,255,0.95)';
   ctx.lineWidth=1.5;
   ctx.beginPath();
-  ctx.moveTo(home.x, home.y); ctx.lineTo(lfX, lfY);
-  ctx.moveTo(home.x, home.y); ctx.lineTo(rfX, rfY);
+  ctx.moveTo(home.x, home.y); ctx.lineTo(lfFence.x, lfFence.y);
+  ctx.moveTo(home.x, home.y); ctx.lineTo(rfFence.x, rfFence.y);
   ctx.stroke();
 
-  // Outfield fence
+  // Fence arc stroke
   ctx.beginPath();
-  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - foulSpread, -Math.PI/2 + foulSpread);
+  ctx.arc(cx, homeY, fenceR, -Math.PI/2 - FOUL, -Math.PI/2 + FOUL);
   ctx.strokeStyle='#37474f';
   ctx.lineWidth=3;
   ctx.stroke();
 
-  // Labels
   ctx.fillStyle='#546e7a';
-  ctx.font=`${Math.max(10, w*0.028)}px "IBM Plex Mono", monospace`;
+  ctx.font=`${Math.max(11, w*0.024)}px "IBM Plex Mono", monospace`;
   ctx.textAlign='center';
-  ctx.fillText('LF', cx - fenceR*0.55, homeY - fenceR*0.55);
-  ctx.fillText('CF', cx, homeY - fenceR*0.88);
-  ctx.fillText('RF', cx + fenceR*0.55, homeY - fenceR*0.55);
+  const lfL = toCanvas(-CF_FT*0.55, CF_FT*0.72);
+  const cfL = toCanvas(0, CF_FT*0.88);
+  const rfL = toCanvas( CF_FT*0.55, CF_FT*0.72);
+  ctx.fillText('LF', lfL.x, lfL.y);
+  ctx.fillText('CF', cfL.x, cfL.y);
+  ctx.fillText('RF', rfL.x, rfL.y);
 
-  // Statcast hc_x / hc_y → canvas (home ≈ 125.42, 198.27; outfield = smaller y)
-  const scale=fenceR/170;
-  for(const p of points||[]){
-    const dx=(Number(p.x)-125.42)*scale;
-    const dy=(198.27-Number(p.y))*scale;
-    const px=cx+dx;
-    const py=homeY-dy;
+  const HIT_COLORS = {
+    HR: '#dc2626',
+    '3B': '#ea580c',
+    '2B': '#2563eb',
+    '1B': '#16a34a',
+    OUT: '#64748b',
+    SF: '#94a3b8',
+    SAC: '#a8a29e',
+    E: '#7c3aed',
+    BIP: '#0f172a',
+  };
+
+  // Draw outs first so hits sit on top
+  const order = ['OUT','SF','SAC','E','BIP','1B','2B','3B','HR'];
+  const sorted = [...(points||[])].sort((a,b)=>order.indexOf(a.hit||'BIP')-order.indexOf(b.hit||'BIP'));
+  for(const p of sorted){
+    const ft = scToFt(p);
+    const {x:px, y:py} = toCanvas(ft.x, ft.y);
+    const hit = p.hit || 'BIP';
+    const isHR = hit === 'HR';
     ctx.beginPath();
-    ctx.arc(px, py, 3.8, 0, Math.PI*2);
-    ctx.fillStyle='#005A9C';
+    ctx.arc(px, py, isHR ? 5.2 : 3.6, 0, Math.PI*2);
+    ctx.fillStyle = HIT_COLORS[hit] || HIT_COLORS.BIP;
     ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,0.7)';
-    ctx.lineWidth=1;
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = isHR ? 1.4 : 1;
     ctx.stroke();
   }
+}
+
+function sprayHitLegendHtml(){
+  const items = [
+    ['HR','#dc2626'],['3B','#ea580c'],['2B','#2563eb'],['1B','#16a34a'],
+    ['OUT','#64748b'],['SF','#94a3b8'],['E','#7c3aed'],
+  ];
+  return `<div class="legend-row">${items.map(([lab,col])=>
+    `<span class="swatch"><span class="dot" style="background:${col}"></span>${lab}</span>`
+  ).join('')}<span style="color:var(--muted)">Fence = 400' CF · poles ~330'</span></div>`;
 }
 function filteredSprayMlb(){
   const team=document.getElementById('spray-team').value;
@@ -993,6 +1057,7 @@ function renderSpray(){
     const f=fpsFor(player.player_id);
     grid.innerHTML = `<div class="spray-card"><h3>${player.name}${player.team?' · '+player.team:''} · ${s?.split||''} · n=${s?.n||0}</h3>
       <canvas id="spray-cv"></canvas>
+      ${sprayHitLegendHtml()}
       <div class="note" style="margin-top:8px">${player.source||''} · FPS% ${pct(f.fps)} · FPS% RISP ${pct(f.fpsRisp)}</div></div>`;
     requestAnimationFrame(()=>drawSpray(document.getElementById('spray-cv'), s?.points||[]));
   }
